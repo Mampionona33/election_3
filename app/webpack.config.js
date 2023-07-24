@@ -6,7 +6,7 @@ const isProduction = process.env.NODE_ENV === "production";
 
 const config = {
   entry: {
-    app: "./src/index.js",
+    app: "./src/index.ts",
     styles: "./src/styles/style.scss",
   },
   output: {
