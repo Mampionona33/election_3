@@ -14,5 +14,7 @@
       "email": "ramamps33@gmail.com"
     }
   ],
-  "require": {}
+  "require": {
+    "twig/twig": "^3.6"
+  }
 }
