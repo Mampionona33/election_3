@@ -26,7 +26,7 @@ final class App
 
     public function __construct()
     {
-        $this->setRouter(new AltoRouter());
+        $this->setRouter();
     }
 
     public function handleRequest()
