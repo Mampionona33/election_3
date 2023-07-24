@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'VendorNamespace\\' => array($vendorDir . ''),
+    'RouterNamespace\\' => array($baseDir . '/router'),
     'ModelNamespace\\' => array($baseDir . '/model'),
     'ControllerNamespace\\' => array($baseDir . '/controller'),
 );

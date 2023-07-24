@@ -1,5 +1,8 @@
 <?php
 // Gestion des erreurs probables
+
+use RouterNamespace\Router;
+
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 // ----------------------------
@@ -14,37 +17,30 @@ final class App
     /**
      * getter and setter
      */
-    public function setRouter($router): void
+    public function setRouter(Router $router): void
     {
         $this->router = $router;
     }
 
-    public function getRouter(): AltoRouter
+    public function getRouter(): Router
     {
         return $this->router;
     }
 
     public function __construct()
     {
-        $this->setRouter();
+        $this->setRouter(new Router());
     }
 
-    public function handleRequest()
+    public function __invoke()
     {
-        // Add routes here
-        $this->getRouter()->map('GET', '/', function () {
-            echo 'Hello, World!';
+        $this->getRouter()->get("/", function () {
+            echo  "hello word";
         });
 
-        $match = $this->getRouter()->match();
-        if ($match) {
-            $match['target']();
-        } else {
-            // If no route is matched, return a 404 response
-            header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
-        }
+        $this->getRouter()->handleRequest();
     }
 }
 
 $app = new App();
-$app->handleRequest();
+$app();

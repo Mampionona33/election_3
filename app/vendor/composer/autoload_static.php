@@ -11,6 +11,10 @@ class ComposerStaticInitbc7421c3876edd62632fb2376c3f6629
         array (
             'VendorNamespace\\' => 16,
         ),
+        'R' => 
+        array (
+            'RouterNamespace\\' => 16,
+        ),
         'M' => 
         array (
             'ModelNamespace\\' => 15,
@@ -25,6 +29,10 @@ class ComposerStaticInitbc7421c3876edd62632fb2376c3f6629
         'VendorNamespace\\' => 
         array (
             0 => __DIR__ . '/../..' . '/vendor',
+        ),
+        'RouterNamespace\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/router',
         ),
         'ModelNamespace\\' => 
         array (

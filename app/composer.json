@@ -1,21 +1,18 @@
 {
-    "name": "gitpod/app",
-    "autoload": {
-      "psr-4": {
-        "VendorNamespace\\": "vendor/",
-        "ControllerNamespace\\": "controller/",
-        "ModelNamespace\\": "model/",
-        "RouterNamespace\\": "router/"
-      }
-    },
-    "authors": [
-      {
-        "name": "Mampionona33",
-        "email": "ramamps33@gmail.com"
-      }
-    ],
-    "require": {
-      
+  "name": "mampionona/app",
+  "autoload": {
+    "psr-4": {
+      "VendorNamespace\\": "vendor/",
+      "ControllerNamespace\\": "controller/",
+      "ModelNamespace\\": "model/",
+      "RouterNamespace\\": "router/"
     }
-  }
-  
+  },
+  "authors": [
+    {
+      "name": "Mampionona33",
+      "email": "ramamps33@gmail.com"
+    }
+  ],
+  "require": {}
+}

@@ -1,19 +1,19 @@
 <?php return array(
     'root' => array(
-        'name' => 'gitpod/app',
+        'name' => 'mampionona/app',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'd836114d270de62df470295fdc0be5cf0342632b',
+        'reference' => 'bba373e1298fc6abb1cb6b39d01e9b3510f143ef',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        'gitpod/app' => array(
+        'mampionona/app' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'd836114d270de62df470295fdc0be5cf0342632b',
+            'reference' => 'bba373e1298fc6abb1cb6b39d01e9b3510f143ef',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
