@@ -4,21 +4,47 @@ error_reporting(E_ALL);
 ini_set('display_errors', '1');
 // ----------------------------
 
+require 'vendor/autoload.php';
 
-$uri = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 
-switch ($uri) {
-    case '/':
-        if (isset($_GET)) {
-            http_response_code(200);
-            $content = "Hello word";
+final class App
+{
+    private $router;
+
+    /**
+     * getter and setter
+     */
+    public function setRouter($router): void
+    {
+        $this->router = $router;
+    }
+
+    public function getRouter(): AltoRouter
+    {
+        return $this->router;
+    }
+
+    public function __construct()
+    {
+        $this->setRouter(new AltoRouter());
+    }
+
+    public function handleRequest()
+    {
+        // Add routes here
+        $this->getRouter()->map('GET', '/', function () {
+            echo 'Hello, World!';
+        });
+
+        $match = $this->getRouter()->match();
+        if ($match) {
+            $match['target']();
+        } else {
+            // If no route is matched, return a 404 response
+            header($_SERVER["SERVER_PROTOCOL"] . " 404 Not Found");
         }
-        break;
-
-    default:
-        http_response_code(404);
-        include_once "views/page_not_found.php";
-        break;
+    }
 }
 
-require_once "template/template.php";
+$app = new App();
+$app->handleRequest();

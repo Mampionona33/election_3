@@ -1,0 +1,20 @@
+{
+    "name": "gitpod/app",
+    "autoload": {
+      "psr-4": {
+        "VendorNamespace\\": "vendor/",
+        "ControllerNamespace\\": "controller/",
+        "ModelNamespace\\": "model/"
+      }
+    },
+    "authors": [
+      {
+        "name": "Mampionona33",
+        "email": "ramamps33@gmail.com"
+      }
+    ],
+    "require": {
+      "altorouter/altorouter": "1.1.0"
+    }
+  }
+  
