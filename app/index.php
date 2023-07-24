@@ -56,12 +56,10 @@ final class App
     {
         $this->setRouter(new Router());
 
-        // Créer un loader pour charger les templates depuis un répertoire spécifique (par exemple, 'templates')
         $loader = new FilesystemLoader(__DIR__ . '/template');
 
         // Créer l'environnement Twig avec le loader
         $twig = new Environment($loader);
-
         // Enregistrez l'instance Twig dans l'objet App
         $this->setTwig($twig);
     }
