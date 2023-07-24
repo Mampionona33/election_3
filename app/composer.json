@@ -2,6 +2,7 @@
   "name": "mampionona/app",
   "autoload": {
     "psr-4": {
+      "App\\": "/",
       "VendorNamespace\\": "vendor/",
       "ControllerNamespace\\": "controller/",
       "ModelNamespace\\": "model/",

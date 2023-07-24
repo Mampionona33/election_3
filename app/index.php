@@ -1,6 +1,7 @@
 <?php
 // Gestion des erreurs probables
 
+use ControllerNamespace\AuthController;
 use RouterNamespace\Router;
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
@@ -18,10 +19,20 @@ final class App
     private $router;
     private $loader;
     private $twig;
+    private $authController;
 
     /**
      * getter and setter
      */
+    public function setAuthController(AuthController $authController): void
+    {
+        $this->authController = $authController;
+    }
+
+    public function getAuthController(): AuthController
+    {
+        return $this->authController;
+    }
     public function setRouter(Router $router): void
     {
         $this->router = $router;
@@ -55,6 +66,7 @@ final class App
     public function __construct()
     {
         $this->setRouter(new Router());
+        $this->setAuthController(new AuthController());
 
         $loader = new FilesystemLoader(__DIR__ . '/template');
 
@@ -72,6 +84,7 @@ final class App
         $this->getRouter()->get("/login", function () {
             echo $this->getTwig()->render("loginpage.html.twig");
         });
+        $this->getRouter()->post("/login", [$this->authController, "handleLogin"]);
 
         $this->getRouter()->handleRequest();
     }
