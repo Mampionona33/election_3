@@ -139,4 +139,3 @@ mysql-data/
 
 .ipynb_checkpoints
 vendor/
-app/vendor/composer/
