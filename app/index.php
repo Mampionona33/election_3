@@ -71,6 +71,9 @@ final class App
         $this->getRouter()->get("/", function () {
             echo $this->getTwig()->render('homepage.html.twig');
         });
+        $this->getRouter()->get("/login", function () {
+            echo $this->getTwig()->render("loginpage.html.twig");
+        });
 
         $this->getRouter()->handleRequest();
     }
