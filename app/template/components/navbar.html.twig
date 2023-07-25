@@ -1,23 +1,25 @@
 {%if showNabar is not defined or showNavbar%}
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between vw-100">
+		<div class="container d-flex m-2">
+			{% if user %}
+				<button class="navbar-toggler btn btn-primary d-flex align-items-center ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+					<span class="material-icons">menu</span>
+				</button>
+			{% endif %}
+		</div>
+		<div class="navbar-collapse justify-content-end">
+			<ul class="navbar-nav mr-2">
+				{% if user %}
+					<li class="nav-item">
+						<a class="nav-link" href="logout">Déconnexion</a>
+					</li>
+				{% else %}
+					<li class="nav-item">
+						<a class="nav-link" href="login">Connexion</a>
+					</li>
+				{% endif %}
+			</ul>
+		</div>
+	</nav>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
-    <div class="container">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse  justify-content-end" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                {% if user %}
-                    <li class="nav-item">
-                        <a class="navbar-brand" href="logout">Déconnexion</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="navbar-brand" href="login">Connexion</a>
-                    </li>
-                {% endif %}
-            </ul>
-        </div>
-    </div>
-</nav>
 {% endif %}

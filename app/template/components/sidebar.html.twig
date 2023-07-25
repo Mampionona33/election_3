@@ -1,0 +1,14 @@
+{% if showNabar is not defined or showNavbar %}
+	<div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+		<div class="offcanvas-header">
+			<h5 class="offcanvas-title d-flex align-items-center gap-1" id="staticBackdropLabel">
+				<span class="material-icons">menu</span>
+				Menu
+			</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+		</div>
+		<div class="offcanvas-body p-0">
+			<div class="d-flex flex-column ">test</div>
+		</div>
+	</div>
+{% endif %}

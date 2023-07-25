@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../dist/style.css">
-    <title>{% block title %}Titre par défaut{% endblock %}</title>
-</head>
-<body class="custom-bc vh-100">
-    <header>
-        <!-- Entête de la page -->
-    </header>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../dist/style.css">
+		<title>
+			{% block title %}Titre par défaut
+			{% endblock %}
+		</title>
+	</head>
+	<body class="custom-bc vh-100">
+		<header>
+			<!-- Entête de la page -->
+		</header>
 
-    {# navbar #}
-    {% include "./components/navbar.html.twig" %}
+		{# navbar #}
+		{% include "./components/navbar.html.twig" %}
+		{# sidebar #}
+		{% include './components/sidebar.html.twig' %}
 
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+		<main>
+			{% block content %}{% endblock %}
+		</main>
 
-    <footer>
-        <!-- Pied de page -->
-    </footer>
-</body>
+		<footer>
+			<!-- Pied de page -->
+		</footer>
+		<script src="../dist/app-bundle.js"></script>
+	</body>
 </html>
