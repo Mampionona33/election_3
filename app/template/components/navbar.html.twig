@@ -8,12 +8,10 @@
         <div class="collapse navbar-collapse  justify-content-end" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 {% if user %}
-                    {# Si l'utilisateur est connecté, affiche le bouton de déconnexion #}
                     <li class="nav-item">
-                        <a class="nav-link" href="logout">Déconnexion</a>
+                        <a class="navbar-brand" href="logout">Déconnexion</a>
                     </li>
                 {% else %}
-                    {# Si l'utilisateur n'est pas connecté, affiche le bouton de connexion #}
                     <li class="nav-item">
                         <a class="navbar-brand" href="login">Connexion</a>
                     </li>

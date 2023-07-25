@@ -77,7 +77,14 @@ class PageController
 
     public function handleLogin(): void
     {
-        echo $this->getTwig()->render("loginpage.html.twig");
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+            if ($this->authController->isUserLogged()) {
+                $this->redirectDashboard();
+            } else {
+                echo $this->getTwig()->render("loginpage.html.twig");
+            }
+        }
     }
 
     private function redirectVisitorHomePage(): void
