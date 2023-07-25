@@ -77,6 +77,9 @@ class AuthController
                     $_SESSION["user"] = $this->userLogged;
                     header("Location: /dashboard");
                     exit();
+                } else {
+                    header("Location: /login");
+                    exit();
                 }
             } else {
                 throw new Error("Obligatory value required", 1);
