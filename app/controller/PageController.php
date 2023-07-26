@@ -68,6 +68,7 @@ class PageController
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
             if ($this->authController->isUserLogged()) {
+                var_dump($_SESSION);
                 echo $this->getTwig()->render("homepage.html.twig", ["user" => $this->authController->getUserLogged()]);
             } else {
                 $this->redirectVisitorHomePage();

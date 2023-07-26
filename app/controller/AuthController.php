@@ -65,7 +65,8 @@ class AuthController
     public function handleLogin(): void
     {
         if (isset($_POST["email"]) && isset($_POST["password"])) {
-            $this->setUserLogged($this->userModel->getByEmail($_POST));
+            $user = $this->userModel->getByEmail($_POST);
+            $this->setUserLogged($user);
 
             if (!empty($this->userLogged)) {
                 $this->saveUserToSession();
@@ -83,8 +84,8 @@ class AuthController
 
     private function saveUserRoleToSession(): void
     {
-        if (!empty($_SESSION["user"]) && isset($_SESSION["user"]["id_groupe"])) {
-            $this->setUserRoles($this->userModel->getRoles($_SESSION["user"]["id_groupe"]));
+        if (!empty($this->userLogged)) {
+            $this->setUserRoles($this->userModel->getRoles($this->userLogged[0]));
         }
         if (!empty($this->userRoles)) {
             if (session_status() === PHP_SESSION_NONE) {
