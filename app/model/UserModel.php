@@ -20,4 +20,10 @@ class UserModel extends DataBaseManager
         $query = "SELECT * FROM $this->tableName WHERE email = '{$user["email"]}' AND password= '{$user["password"]}'";
         return $this->executeQuery($query);
     }
+
+    public function getRoles($user): array
+    {
+        $query = "SELECT id_role FROM Authorisation WHERE id_groupe = {$user['id_groupe']}";
+        return $this->executeQuery($query);
+    }
 }
