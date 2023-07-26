@@ -23,7 +23,7 @@ class UserModel extends DataBaseManager
 
     public function getRoles($user): array
     {
-        $query = "SELECT id_role FROM Authorisation WHERE id_groupe = {$user['id_groupe']}";
+        $query = "SELECT id_role FROM Authorization WHERE id_groupe = {$user['id_groupe']}";
         return $this->executeQuery($query);
     }
 }
