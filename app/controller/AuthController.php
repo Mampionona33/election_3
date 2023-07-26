@@ -3,6 +3,7 @@
 namespace ControllerNamespace;
 
 use Error;
+use ModelNamespace\AuthorizationModel;
 use ModelNamespace\UserModel;
 
 class AuthController
@@ -10,6 +11,21 @@ class AuthController
     private $userLogged;
     private $userModel;
     private $userRoles;
+    private $authorizationModel;
+
+    /**
+     * getter and setter
+     */
+
+    public function getAuthorizationModel(): AuthorizationModel
+    {
+        return $this->authorizationModel;
+    }
+
+    public function setAuthorizationModel(AuthorizationModel $authorizationModel): void
+    {
+        $this->authorizationModel = $authorizationModel;
+    }
 
     public function setUserRoles(array $userRoles): void
     {
@@ -43,10 +59,12 @@ class AuthController
         }
         return null;
     }
+    // --------------------------------
 
     public function __construct()
     {
         $this->setUserModel(new UserModel());
+        $this->setAuthorizationModel(new AuthorizationModel());
     }
 
     public function isUserLogged(): bool
@@ -85,7 +103,7 @@ class AuthController
     private function saveUserRoleToSession(): void
     {
         if (!empty($this->userLogged)) {
-            $this->setUserRoles($this->userModel->getRoles($this->userLogged[0]));
+            $this->setUserRoles($this->authorizationModel->getGroupeRoles($this->userLogged[0]["id_groupe"]));
         }
         if (!empty($this->userRoles)) {
             if (session_status() === PHP_SESSION_NONE) {

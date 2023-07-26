@@ -52,9 +52,6 @@ final class App
         return $this->router;
     }
 
-
-
-
     // --------------------------------------
     public function __construct()
     {
