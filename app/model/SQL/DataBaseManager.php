@@ -207,9 +207,9 @@ class DataBaseManager
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function findAll($table)
+    public function getAll()
     {
-        $sql = "SELECT * FROM $table";
+        $sql = "SELECT * FROM $this->tableName";
         $stmt = $this->connection->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

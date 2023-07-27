@@ -65,6 +65,7 @@ class CandidatController
     public function __construct(AuthController $authController)
     {
         $this->authController = $authController;
+        $this->setCandidatModel(new CandidatModel());
         $this->setLoader(new FilesystemLoader(__DIR__ . '/../template'));
         $this->setTwig(new Environment($this->loader));
     }
@@ -73,7 +74,8 @@ class CandidatController
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
             if ($this->authController->isUserLogged()) {
-                echo $this->getTwig()->render("candidatpage.html.twig", $this->userService->provideUserData());
+                var_dump($this->candidatModel->getAll());
+                echo $this->getTwig()->render("candidatpage.html.twig", [$this->userService->provideUserData(), "candidats" => $this->candidatModel->getAll()]);
             } else {
                 echo $this->getTwig()->render("not authorised");
             }

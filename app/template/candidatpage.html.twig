@@ -1,8 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Géstion des candidats
+{% block title %}Gestion des candidats
 {% endblock %}
 
 {% block content %}
-	<p>place holder candidat</p>
+	{% if candidats %}
+		<div class="d-flex justify-content-center align-items-center">
+			{% include 'components/table.html.twig' with {headers: ["Id", "Nom", "Nombres de voix"], tableContent: candidats} %}
+		</div>
+	{% endif %}
 {% endblock %}
