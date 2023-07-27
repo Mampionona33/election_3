@@ -11,7 +11,10 @@ class UserModel extends DataBaseManager
         parent::__construct();
         $this->setIdKey("id_user");
         $this->setTableName("User");
-        $this->setColumns("$this->id_key INT PRIMARY KEY AUTO_INCREMENT,email VARCHAR(255), password VARCHAR(255), id_groupe INT");
+        $this->setColumns("$this->id_key INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+        email VARCHAR(100) NOT NULL UNIQUE,
+        password VARCHAR(100) NOT NULL,
+        id_groupe INT NOT NULL");
         $this->createTable($this->tableName, $this->columns);
     }
 

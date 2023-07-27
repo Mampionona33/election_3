@@ -30,6 +30,13 @@ CREATE TABLE Candidat (
     nb_voix INT
 );
 
+
+INSERT INTO
+    Groupe (name)
+VALUES
+    ('admin'),
+    ('operator');
+
 INSERT INTO
     User (email, password, id_groupe)
 VALUES
@@ -53,12 +60,6 @@ VALUES
     ('Rabe', 29),
     ('Randria', 33),
     ('Ranaivo', 56);
-
-INSERT INTO
-    Groupe (name)
-VALUES
-    ('admin'),
-    ('operator');
 
 INSERT INTO
     Authorization (id_groupe, id_role)
