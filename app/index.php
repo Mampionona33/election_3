@@ -2,10 +2,10 @@
 // Gestion des erreurs probables
 
 use ControllerNamespace\AuthController;
+use ControllerNamespace\CandidatController;
 use ControllerNamespace\PageController;
 use RouterNamespace\Router;
-use Twig\Loader\FilesystemLoader;
-use Twig\Environment;
+
 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
@@ -20,10 +20,19 @@ final class App
     private $router;
     private $authController;
     private $pageController;
+    private $candidatController;
 
     /**
      * getter and setter
      */
+    public function setCandidatController(CandidatController $candidatController): void
+    {
+        $this->candidatController = $candidatController;
+    }
+    public function getCandidatController(): CandidatController
+    {
+        return $this->candidatController;
+    }
     public function setPageController(PageController $pageController): void
     {
         $this->pageController = $pageController;
@@ -58,6 +67,7 @@ final class App
         $this->setRouter(new Router());
         $this->setAuthController(new AuthController());
         $this->setPageController(new PageController($this->authController));
+        $this->setCandidatController(new CandidatController($this->authController));
     }
 
     public function __invoke()
@@ -67,6 +77,7 @@ final class App
         $this->getRouter()->get("/dashboard", [$this->pageController, "handleDashboard"]);
         $this->getRouter()->post("/login", [$this->authController, "handleLogin"]);
         $this->getRouter()->get("/logout", [$this->authController, "handleLogout"]);
+        $this->getRouter()->get("/candidat", [$this->candidatController, "handleGet"]);
 
         $this->getRouter()->handleRequest();
     }
