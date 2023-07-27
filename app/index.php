@@ -19,9 +19,9 @@ require 'vendor/autoload.php';
 final class App
 {
     private $router;
-    private $authController;
     private $pageController;
     private $candidatController;
+    private $authController;
     private $userService;
     private $authorizationController;
     /**
@@ -89,9 +89,10 @@ final class App
         $this->setUserService(new UserService($this->authController, $this->authorizationController));
         $this->setPageController(new PageController());
         $this->pageController->setUserService($this->getUserService());
-        $this->setCandidatController(new CandidatController($this->authController));
+        $this->setCandidatController(new CandidatController());
         $this->candidatController->setUserService($this->getUserService());
         $this->pageController->setAuthController($this->authController);
+        $this->candidatController->setAuthController($this->authController);
     }
 
 

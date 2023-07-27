@@ -17,19 +17,18 @@ CREATE TABLE Authorization (
     FOREIGN KEY (id_role) REFERENCES Role(id_role)
 );
 
-CREATE TABLE User(
-    id_user INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(100) NOT NULL,
-    id_groupe INT NOT NULL
-);
-
 CREATE TABLE Candidat (
     id_candidat INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL UNIQUE,
     nb_voix INT
 );
 
+CREATE TABLE User(
+    id_user INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(100) NOT NULL,
+    id_groupe INT NOT NULL
+);
 
 INSERT INTO
     Groupe (name)
