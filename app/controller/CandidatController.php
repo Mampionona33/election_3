@@ -3,6 +3,7 @@
 namespace ControllerNamespace;
 
 use ModelNamespace\CandidatModel;
+use ServiceNamespace\UserService;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -12,9 +13,18 @@ class CandidatController
     private $loader;
     private $candidatModel;
     private $authController;
+    private $userService;
     /**
      * getter and sette
      */
+    public function setUserService(UserService $userService): void
+    {
+        $this->userService = $userService;
+    }
+    public function getUserService(): UserService
+    {
+        return $this->userService;
+    }
     public function setAuthController(AuthController $authController): void
     {
         $this->authController = $authController;
@@ -63,7 +73,7 @@ class CandidatController
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
             if ($this->authController->isUserLogged()) {
-                echo $this->getTwig()->render("candidatpage.html.twig", ["user" => $this->authController->getUserLogged()]);
+                echo $this->getTwig()->render("candidatpage.html.twig", $this->userService->provideUserData());
             } else {
                 echo $this->getTwig()->render("not authorised");
             }

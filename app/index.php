@@ -2,10 +2,11 @@
 // Gestion des erreurs probables
 
 use ControllerNamespace\AuthController;
+use ControllerNamespace\AuthorizationController;
 use ControllerNamespace\CandidatController;
 use ControllerNamespace\PageController;
 use RouterNamespace\Router;
-
+use ServiceNamespace\UserService;
 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
@@ -21,10 +22,28 @@ final class App
     private $authController;
     private $pageController;
     private $candidatController;
-
+    private $userService;
+    private $authorizationController;
     /**
      * getter and setter
      */
+    public function setAuthorzationController(AuthorizationController $authorizationController): void
+    {
+        $this->authorizationController = $authorizationController;
+    }
+
+    public function getAuthorzationController(): AuthorizationController
+    {
+        return $this->authorizationController;
+    }
+    public function setUserService(UserService $userService): void
+    {
+        $this->userService = $userService;
+    }
+    public function getUserService(): UserService
+    {
+        return $this->userService;
+    }
     public function setCandidatController(CandidatController $candidatController): void
     {
         $this->candidatController = $candidatController;
@@ -66,9 +85,15 @@ final class App
     {
         $this->setRouter(new Router());
         $this->setAuthController(new AuthController());
-        $this->setPageController(new PageController($this->authController));
+        $this->setAuthorzationController(new AuthorizationController());
+        $this->setUserService(new UserService($this->authController, $this->authorizationController));
+        $this->setPageController(new PageController());
+        $this->pageController->setUserService($this->getUserService());
         $this->setCandidatController(new CandidatController($this->authController));
+        $this->candidatController->setUserService($this->getUserService());
+        $this->pageController->setAuthController($this->authController);
     }
+
 
     public function __invoke()
     {

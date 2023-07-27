@@ -6,6 +6,7 @@
       "VendorNamespace\\": "vendor/",
       "ControllerNamespace\\": "controller/",
       "ModelNamespace\\": "model/",
+      "ServiceNamespace\\": "service/",
       "RouterNamespace\\": "router/"
     }
   },

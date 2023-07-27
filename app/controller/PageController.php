@@ -5,6 +5,7 @@ namespace ControllerNamespace;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use ControllerNamespace\AuthorizationController;
+use ServiceNamespace\UserService;
 
 class PageController
 {
@@ -12,10 +13,18 @@ class PageController
     private $loader;
     private $authController;
     private $authorizationController;
-
+    private $userService;
     /**
      * getter and setter
      */
+    public function setUserService(UserService $userService): void
+    {
+        $this->userService = $userService;
+    }
+    public function getUserService(): UserService
+    {
+        return $this->userService;
+    }
     public function setAuthorzationController(AuthorizationController $authorizationController): void
     {
         $this->authorizationController = $authorizationController;
@@ -56,9 +65,8 @@ class PageController
         return $this->loader;
     }
 
-    public function __construct(AuthController $authController)
+    public function __construct()
     {
-        $this->authController = $authController;
         $this->setAuthorzationController(new AuthorizationController());
         $this->setLoader(new FilesystemLoader(__DIR__ . '/../template'));
         $this->setTwig(new Environment($this->loader));
@@ -81,7 +89,7 @@ class PageController
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
             if ($this->authController->isUserLogged()) {
-                echo $this->getTwig()->render("homepage.html.twig", ["user" => $this->authController->getUserLogged(), "canManageCandidats" => $this->authorizationController->canManageCandidats()]);
+                echo $this->getTwig()->render("homepage.html.twig", $this->userService->provideUserData());
             } else {
                 $this->redirectVisitorHomePage();
             }
