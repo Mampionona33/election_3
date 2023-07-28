@@ -6,8 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="../dist/style.css">
 		<title>
-			{% block title %}Titre par défaut
-			{% endblock %}
+			{% block title %}Titre par défaut{% endblock %}
 		</title>
 	</head>
 	<body class="custom-bc vh-100">
@@ -21,13 +20,13 @@
 		{% include './components/sidebar.html.twig' %}
 
 		<main class="container-sm d-flex justify-content-center vw-100">
-			<div class="position-absolute top-50 h-30"> {% block content %}{% endblock %}
-				</div>
-			</main>
+			<div class="position-absolute top-50 start-50 translate-middle"> {% block content %}{% endblock %}
+			</div>
+		</main>
 
-			<footer>
-				<!-- Pied de page -->
-			</footer>
-			<script src="../dist/app-bundle.js"></script>
-		</body>
-	</html>
+		<footer>
+			<!-- Pied de page -->
+		</footer>
+		<script src="../dist/app-bundle.js"></script>
+	</body>
+</html>

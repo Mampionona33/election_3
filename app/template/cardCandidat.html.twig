@@ -6,6 +6,9 @@
 			<h3>Le resultat pour le candidat :
 				{{item.name}}</h3>
 		{% endfor %}
+	{% else %}
+		<h3>Aucun candidat trouvé</h3>
 	{% endif %}
-	<h3>Aucun candidat trouvé</h3>
+
+
 {% endblock %}
