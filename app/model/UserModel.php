@@ -29,4 +29,5 @@ class UserModel extends DataBaseManager
         $query = "SELECT id_role FROM Authorization WHERE id_groupe = {$user['id_groupe']}";
         return $this->executeQuery($query);
     }
+
 }

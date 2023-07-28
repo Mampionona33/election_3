@@ -79,7 +79,7 @@ class PageController
             if ($this->authController->isUserLogged()) {
                 $this->redirectDashboard();
             } else {
-                echo $this->getTwig()->render("homepage.html.twig");
+                echo $this->getTwig()->render("homepage.html.twig", ["services" => $this->userService->provideUserData()]);
             }
         }
     }

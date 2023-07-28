@@ -1,0 +1,10 @@
+{% extends '/components/card.html.twig' %}
+
+{% block card_title %}
+	{% if services.candidats %}
+		{% for item in services.candidats %}
+			<h3>Le resultat pour le candidat :
+				{{item.name}}</h3>
+		{% endfor %}
+	{% endif %}
+{% endblock %}

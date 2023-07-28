@@ -4,16 +4,26 @@ namespace ServiceNamespace;
 
 use ControllerNamespace\AuthController;
 use ControllerNamespace\AuthorizationController;
+use ModelNamespace\CandidatModel;
 
 class UserService
 {
     private $authController;
     private $authorizationController;
     private $userInfo;
+    private $candidatModel;
 
     /**
      * getter and setter
      */
+    public function getCandidatModel(): CandidatModel
+    {
+        return $this->candidatModel;
+    }
+    public function setCandidatModel(CandidatModel $candidatModel): void
+    {
+        $this->candidatModel = $candidatModel;
+    }
     public function setUserInfo(array $userInfo): void
     {
         $this->userInfo = $userInfo;
@@ -42,6 +52,7 @@ class UserService
     // --------------------------------
     public function __construct(AuthController $authController, AuthorizationController $authorizationController)
     {
+        $this->setCandidatModel(new CandidatModel());
         $this->authController = $authController;
         $this->authorizationController = $authorizationController;
     }
@@ -55,7 +66,7 @@ class UserService
             $this->userInfo["user"] = $this->authController->getUserLogged();
             $this->userInfo["canManageCandidats"] = $this->authorizationController->canManageCandidats();
         }
-        // var_dump($this->userInfo);
+        $this->userInfo["candidats"] = $this->candidatModel->getResult();
         return $this->userInfo;
     }
 }

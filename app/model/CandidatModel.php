@@ -15,4 +15,10 @@ class CandidatModel extends DataBaseManager
         name VARCHAR(100) NOT NULL UNIQUE,
         nb_voix INT");
     }
+
+    public function getResult(): array
+    {
+        $query = "SELECT * FROM $this->tableName WHERE $this->id_key = (SELECT MIN($this->id_key) FROM Candidat);";
+        return $this->executeQuery($query);
+    }
 }
