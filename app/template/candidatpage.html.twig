@@ -5,8 +5,6 @@
 
 {% block content %}
 	{% if candidats %}
-		<div class="d-flex justify-content-center align-items-center">
-			{% include 'components/table.html.twig' with {headers: ["Id", "Nom", "Nombres de voix"], tableContent: candidats} %}
-		</div>
+		{% include 'components/table.html.twig' with {headers: ["Id", "Nom", "Nombres de voix"], tableContent: candidats} %}
 	{% endif %}
 {% endblock %}

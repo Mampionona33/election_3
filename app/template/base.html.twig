@@ -20,7 +20,9 @@
 		{# sidebar #}
 		{% include './components/sidebar.html.twig' %}
 
-		<main class="container-sm"> {% block content %}{% endblock %}
+		<main class="container-sm d-flex justify-content-center vw-100">
+			<div class="position-absolute top-50 h-30"> {% block content %}{% endblock %}
+				</div>
 			</main>
 
 			<footer>

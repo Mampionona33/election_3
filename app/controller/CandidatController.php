@@ -68,13 +68,15 @@ class CandidatController
         $this->setLoader(new FilesystemLoader(__DIR__ . '/../template'));
         $this->setTwig(new Environment($this->loader));
     }
+
+
+
     public function handleGet(): void
     {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
             if ($this->authController->isUserLogged()) {
-                var_dump($this->authController->getUserLogged());
-                echo $this->getTwig()->render("candidatpage.html.twig", [$this->userService->provideUserData(), "candidats" => $this->candidatModel->getAll()]);
+                echo $this->getTwig()->render("candidatpage.html.twig", ["services" => $this->userService->provideUserData(), "candidats" => $this->candidatModel->getAll()]);
             } else {
                 echo $this->getTwig()->render("not authorised");
             }

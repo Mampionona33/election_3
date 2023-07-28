@@ -55,6 +55,7 @@ class UserService
             $this->userInfo["user"] = $this->authController->getUserLogged();
             $this->userInfo["canManageCandidats"] = $this->authorizationController->canManageCandidats();
         }
+        // var_dump($this->userInfo);
         return $this->userInfo;
     }
 }
