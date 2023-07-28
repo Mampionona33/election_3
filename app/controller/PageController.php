@@ -104,6 +104,7 @@ class PageController
                 $this->redirectDashboard();
             } else {
                 echo $this->getTwig()->render("loginpage.html.twig");
+                exit();
             }
         }
     }

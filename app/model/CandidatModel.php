@@ -14,6 +14,7 @@ class CandidatModel extends DataBaseManager
         $this->setColumns("$this->id_key INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(100) NOT NULL UNIQUE,
         nb_voix INT");
+        $this->createTable($this->tableName, $this->columns);
     }
 
     public function getResult(): array

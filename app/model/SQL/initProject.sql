@@ -9,14 +9,6 @@ CREATE TABLE Role (
     name VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE Authorization (
-    id_authorization INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    id_groupe INT,
-    id_role INT,
-    FOREIGN KEY (id_groupe) REFERENCES Groupe(id_groupe),
-    FOREIGN KEY (id_role) REFERENCES Role(id_role)
-);
-
 CREATE TABLE Candidat (
     id_candidat INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL UNIQUE,
@@ -29,6 +21,16 @@ CREATE TABLE User(
     password VARCHAR(100) NOT NULL,
     id_groupe INT NOT NULL
 );
+
+
+CREATE TABLE Authorization (
+    id_authorization INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    id_groupe INT,
+    id_role INT,
+    FOREIGN KEY (id_groupe) REFERENCES Groupe(id_groupe),
+    FOREIGN KEY (id_role) REFERENCES Role(id_role)
+);
+
 
 INSERT INTO
     Groupe (name)
