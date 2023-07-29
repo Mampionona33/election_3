@@ -4,6 +4,7 @@ namespace ServiceNamespace;
 
 use ControllerNamespace\AuthController;
 use ControllerNamespace\AuthorizationController;
+use ControllerNamespace\CandidatController;
 use ModelNamespace\CandidatModel;
 
 class UserService
@@ -12,10 +13,19 @@ class UserService
     private $authorizationController;
     private $userInfo;
     private $candidatModel;
+    private $candidatController;
 
     /**
      * getter and setter
      */
+    public function setCandidaController(CandidatController $candidatController): void
+    {
+        $this->candidatController = $candidatController;
+    }
+    public function getCandidatController(): CandidatController
+    {
+        return $this->candidatController;
+    }
     public function getCandidatModel(): CandidatModel
     {
         return $this->candidatModel;
@@ -53,6 +63,7 @@ class UserService
     public function __construct(AuthController $authController, AuthorizationController $authorizationController)
     {
         $this->setCandidatModel(new CandidatModel());
+        $this->setCandidaController(new CandidatController());
         $this->authController = $authController;
         $this->authorizationController = $authorizationController;
     }
@@ -66,7 +77,8 @@ class UserService
             $this->userInfo["user"] = $this->authController->getUserLogged();
             $this->userInfo["canManageCandidats"] = $this->authorizationController->canManageCandidats();
         }
-        $this->userInfo["candidats"] = $this->candidatModel->getResult();
+        // var_dump($this->candidatModel->getCandidatWithMaxPoint());
+        $this->userInfo["candidats"] = $this->candidatModel->getAllWithPercentage();
         return $this->userInfo;
     }
 }

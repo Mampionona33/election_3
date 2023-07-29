@@ -14,9 +14,36 @@ class CandidatController
     private $candidatModel;
     private $authController;
     private $userService;
+    private $firstCandidat;
+    private $candidatMaxPoint;
+    private $result;
     /**
      * getter and sette
      */
+    public function setResult(string $result): void
+    {
+        $this->result = $result;
+    }
+    public function  getResult(): string
+    {
+        return $this->result;
+    }
+    public function setFirstCandidat(array $firstCandidat): void
+    {
+        $this->firstCandidat = $firstCandidat;
+    }
+    public function getFirsCandidat(): array
+    {
+        return $this->firstCandidat;
+    }
+    public function setCandidatMaxPoint(array $candidatMaxPoint): void
+    {
+        $this->candidatMaxPoint = $candidatMaxPoint;
+    }
+    public function getCandidatMaxPoint(): array
+    {
+        return $this->candidatMaxPoint;
+    }
     public function setUserService(UserService $userService): void
     {
         $this->userService = $userService;
@@ -69,6 +96,22 @@ class CandidatController
         $this->setTwig(new Environment($this->loader));
     }
 
+    public function caluclResult()
+    {
+        $this->setCandidatMaxPoint($this->candidatModel->getCandidatWithMaxPoint());
+        $this->setFirstCandidat($this->candidatModel->getFirstCandidat());
+
+        if (!empty($this->getFirsCandidat()) && !empty($this->getCandidatMaxPoint())) {
+            if (!empty(array_diff($this->getFirsCandidat()[0], $this->getCandidatMaxPoint()[0]))) {
+                if ($this->getFirsCandidat() >= 12.5) {
+                    // $this->setResult("Le candidat $this->getFirsCandidat()[0][name]");
+                }
+            }
+        }
+
+        return $this->candidatModel->customGetAll();
+    }
+
 
 
     public function handleGet(): void
@@ -76,7 +119,7 @@ class CandidatController
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
             if ($this->authController->isUserLogged()) {
-                echo $this->getTwig()->render("candidatpage.html.twig", ["services" => $this->userService->provideUserData(), "candidats" => $this->candidatModel->getAll()]);
+                echo $this->getTwig()->render("candidatpage.html.twig", ["services" => $this->userService->provideUserData(), "candidats" => $this->candidatModel->customGetAll()]);
             } else {
                 echo $this->getTwig()->render("not authorised");
             }
