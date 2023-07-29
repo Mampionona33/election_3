@@ -17,6 +17,7 @@
     }
   ],
   "require": {
-    "twig/twig": "^3.6"
+    "twig/twig": "^3.6",
+    "coffeecode/router": "2.0.*"
   }
 }
