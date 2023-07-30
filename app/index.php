@@ -2,6 +2,9 @@
 // Gestion des erreurs probables
 
 use CoffeeCode\Router\Router;
+use Doctrine\ORM\EntityManager;
+
+
 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
@@ -13,10 +16,19 @@ final class App
 {
     private $router;
     private $response;
+    private $entityManager;
 
     /**
      * getter and setter
      */
+    public function setEntityManager(EntityManager $entityManager): void
+    {
+        $this->entityManager = $entityManager;
+    }
+    public function getEntityManager(): EntityManager
+    {
+        return $this->entityManager;
+    }
     public function setResponse(string $response): void
     {
         $this->response = $response;
@@ -62,7 +74,6 @@ final class App
     {
         $this->router->get("/", "UserController:index");
         $this->router->get("/login", "UserController:login");
-
 
         $this->handleError();
         $this->setResponse($this->router->dispatch());
