@@ -21,6 +21,10 @@ class UserController
     /**
      * getter
      */
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
     public function getEntityManager(): EntityManager
     {
         return $this->entityManager;
@@ -37,6 +41,10 @@ class UserController
     /**
      * setter
      */
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
     public function setEntityManager(EntityManager $entityManager): void
     {
         $this->entityManager = $entityManager;

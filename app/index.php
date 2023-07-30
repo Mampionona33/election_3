@@ -74,7 +74,7 @@ final class App
     {
         $this->router->get("/", "UserController:index");
         $this->router->get("/login", "LoginPageController:render");
-        $this->router->post("/login", "LoginPageController:post");
+        $this->router->post("/login", "LoginPageController:handlePost");
 
         $this->handleError();
         $this->setResponse($this->router->dispatch());
