@@ -19,38 +19,35 @@ class UserController
     private $loader;
     private $entityManager;
     /**
-     * getter and setter
+     * getter
      */
+    public function getEntityManager(): EntityManager
+    {
+        return $this->entityManager;
+    }
+    public function getTwig(): Environment
+    {
+        return $this->twig;
+    }
+    public function getLoader(): FilesystemLoader
+    {
+        return $this->loader;
+    }
 
     /**
-     * getter and setter
+     * setter
      */
     public function setEntityManager(EntityManager $entityManager): void
     {
         $this->entityManager = $entityManager;
     }
-    public function getEntityManager(): EntityManager
-    {
-        return $this->entityManager;
-    }
-
     public function setTwig(Environment $twig): void
     {
         $this->twig = $twig;
     }
-
-    public function getTwig(): Environment
-    {
-        return $this->twig;
-    }
     public function setLoader(FilesystemLoader $loader): void
     {
         $this->loader = $loader;
-    }
-
-    public function getLoader(): FilesystemLoader
-    {
-        return $this->loader;
     }
     // -----------------------------------
     public function __construct()
@@ -59,13 +56,12 @@ class UserController
         $this->setLoader(new FilesystemLoader(__DIR__ . '/../template'));
         $this->setTwig(new Environment($this->loader));
         $this->createUserTableIfNotExists();
-        $this->save();
     }
 
     private function initializeEntityManager()
     {
-        $bootstrap = new Bootstrap();
-        $this->setEntityManager($bootstrap->createEntityManager());
+        $bootstrap = Bootstrap::getInstance();
+        $this->setEntityManager($bootstrap->getEntityManager());
     }
 
     public function save(): void

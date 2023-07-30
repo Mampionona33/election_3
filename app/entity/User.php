@@ -14,7 +14,7 @@ class User
     #[Column(name: 'id_user', type: 'integer')]
     #[GeneratedValue(strategy: 'AUTO')]
     private int $id;
-    #[Column(name: 'email', length: 100)]
+    #[Column(name: 'email', length: 100, unique: true)]
     private $email;
     #[Column(name: 'password', length: 250)]
     private $password;
