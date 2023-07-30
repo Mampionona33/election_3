@@ -13,7 +13,7 @@ class User
     #[Id]
     #[Column(name: 'id_user', type: 'integer')]
     #[GeneratedValue(strategy: 'AUTO')]
-    private int|null $id;
+    private int $id;
     #[Column(name: 'email', length: 100)]
     private $email;
     #[Column(name: 'password', length: 250)]
@@ -24,12 +24,6 @@ class User
     /**
      * Getter
      */
-
-    public function setEmail(string $email): void
-    {
-        $this->email = $email;
-    }
-
     public function getEmail(): string
     {
         return $this->email;
@@ -39,6 +33,21 @@ class User
     {
         return $this->password;
     }
+
+    public function getGroupeId(): int
+    {
+        return $this->id_groupe;
+    }
+
+    /**
+     * setter
+     */
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
 
     public function setPassword(string $password): void
     {
@@ -50,10 +59,6 @@ class User
         $this->id_groupe = $id_groupe;
     }
 
-    public function getGroupeId(): int
-    {
-        return $this->id_groupe;
-    }
 
     public function __construct()
     {
