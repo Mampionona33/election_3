@@ -86,4 +86,5 @@ class LoginPageController extends UserController
             var_dump($this->getUserByEmail());
         }
     }
+    
 }

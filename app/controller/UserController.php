@@ -112,9 +112,4 @@ class UserController
     {
         echo $this->getTwig()->render("homepage.html.twig");
     }
-
-    public function login()
-    {
-        echo $this->getTwig()->render("loginpage.html.twig");
-    }
 }
