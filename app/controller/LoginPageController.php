@@ -48,18 +48,42 @@ class LoginPageController extends UserController
         echo $this->getAppTwigEnvironment()->getTwig()->render("loginpage.html.twig");
     }
 
-    public function handlePost(): void
+    private function initializeEmailValue(): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST["email"])) {
                 $this->setEmail($_POST["email"]);
-                var_dump($this->getUserByEmail());
             }
         }
+    }
+
+    private function initializePasswordValue(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST["password"])) {
+                $this->setPassword($_POST["password"]);
+            }
+        }
+    }
+
+    private function verifyPassword(): bool
+    {
+        $user = $this->getUserByEmail();
+        $userPassword = $user->getPassword();
+        return $this->getPassword() === $userPassword;
     }
 
     private function getUserByEmail()
     {
         return  $this->getAppEntityManage()->getEntityManager()->getRepository(User::class)->findOneBy(["email" => $this->getEmail()]);
+    }
+
+    public function handlePost(): void
+    {
+        $this->initializeEmailValue();
+        $this->initializePasswordValue();
+        if ($this->verifyPassword()) {
+            var_dump($this->getUserByEmail());
+        }
     }
 }

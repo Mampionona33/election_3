@@ -13,7 +13,7 @@ use Twig\Loader\FilesystemLoader;
 class UserController
 {
     private $email;
-    private $password;
+    private string | null $password;
     private $id;
     private $twig;
     private $loader;
@@ -24,6 +24,10 @@ class UserController
     public function getEmail(): string
     {
         return $this->email;
+    }
+    public function getPassword(): string | null
+    {
+        return $this->password;
     }
     public function getEntityManager(): EntityManager
     {
@@ -41,6 +45,10 @@ class UserController
     /**
      * setter
      */
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
     public function setEmail(string $email): void
     {
         $this->email = $email;
