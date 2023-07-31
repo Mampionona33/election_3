@@ -111,5 +111,6 @@ class UserController
     public function index(): void
     {
         echo $this->getTwig()->render("homepage.html.twig");
+        exit();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace ControllerNamespace;
 
+use CoffeeCode\Router\Router;
 use Entity\User;
 use Lib\AppEntityManage;
 use Lib\AppTwigEnvironment;
@@ -10,10 +11,15 @@ class LoginPageController extends UserController
 {
     private $appTwigEnvironment;
     private $appEntityManage;
+    private $router;
 
     /**
      * getter
      */
+    public function getRouter(): Router
+    {
+        return $this->router;
+    }
     public function getAppTwigEnvironment(): AppTwigEnvironment
     {
         return $this->appTwigEnvironment;
@@ -25,6 +31,10 @@ class LoginPageController extends UserController
     /**
      * Setter
      */
+    public function setRouter(Router $router): void
+    {
+        $this->router = $router;
+    }
     public function setAppTwigEnvironment(AppTwigEnvironment $appTwigEnvironment): void
     {
         $this->appTwigEnvironment = $appTwigEnvironment;
@@ -78,13 +88,28 @@ class LoginPageController extends UserController
         return  $this->getAppEntityManage()->getEntityManager()->getRepository(User::class)->findOneBy(["email" => $this->getEmail()]);
     }
 
+    private function initializeSession(): void
+    {
+        if (!empty($this->getUserByEmail())) {
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            $_SESSION["user"] = $this->getUserByEmail();
+        }
+    }
+
     public function handlePost(): void
     {
         $this->initializeEmailValue();
         $this->initializePasswordValue();
         if ($this->verifyPassword()) {
-            var_dump($this->getUserByEmail());
+            $this->initializeSession();
         }
     }
-    
+
+    public function test(): void
+    {
+        echo "test";
+        exit();
+    }
 }
