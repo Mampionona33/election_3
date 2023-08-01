@@ -2,9 +2,13 @@
 
 namespace ControllerNamespace;
 
+use Doctrine\ORM\EntityManager;
+
 abstract class AbstractTable
 {
-    private $name;
-    private $columns;
-    abstract public function create();
+    protected string $name;
+    protected $columns;
+    protected EntityManager $entityManager;
+    protected $bootstrap;
+    abstract protected function initializeEntityManager(): void;
 }
