@@ -88,7 +88,7 @@ class LoginPageController extends UserController
         return  $this->getAppEntityManage()->getEntityManager()->getRepository(User::class)->findOneBy(["email" => $this->getEmail()]);
     }
 
-    private function initializeSession(): void
+    private function assigneUserToSessionUser(): void
     {
         if (!empty($this->getUserByEmail())) {
             if (session_status() === PHP_SESSION_NONE) {
@@ -98,12 +98,12 @@ class LoginPageController extends UserController
         }
     }
 
-    public function handlePost(): void
+    public function initializeSession(): void
     {
         $this->initializeEmailValue();
         $this->initializePasswordValue();
         if ($this->verifyPassword()) {
-            $this->initializeSession();
+            $this->assigneUserToSessionUser();
         }
     }
 

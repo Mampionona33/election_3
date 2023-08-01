@@ -103,7 +103,7 @@ final class App
         $this->router->get("/", "UserController:index");
         $this->router->get("/dasboard", "LoginPageController:test");
         $this->router->get("/login", "LoginPageController:render");
-        $this->router->post("/login", "LoginPageController:handlePost");
+        $this->router->post("/login", "LoginPageController:initializeSession");
 
         $this->handleError();
         $this->verifySessionExist();
