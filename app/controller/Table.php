@@ -3,34 +3,11 @@
 namespace ControllerNamespace;
 
 use App\Bootstrap;
+use ControllerNamespace\AbstractTable;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\ClassMetadata;
 
 class Table extends AbstractTable
 {
-    protected string $name;
-    protected $columns;
-    protected $bootstrap;
-
-    /**
-     * Getter
-     */
-    public function getBootstrap(): Bootstrap
-    {
-        return $this->bootstrap;
-    }
-    public function getName(): string
-    {
-        return $this->name;
-    }
-    public function getColumns(): ClassMetadata
-    {
-        return $this->columns;
-    }
-    public function getEntitiManager(): EntityManager
-    {
-        return $this->entityManager;
-    }
     /**
      * Setter
      */
@@ -38,32 +15,45 @@ class Table extends AbstractTable
     {
         $this->name = $name;
     }
-    public function setColumns(ClassMetadata $columns): void
+    public function setColumns(array $columns): void
     {
         $this->columns = $columns;
-    }
-    public function setEntityManager(EntityManager $entityManager): void
-    {
-        $this->entityManager = $entityManager;
     }
     public function setBootstrap(Bootstrap $bootstrap): void
     {
         $this->bootstrap = $bootstrap;
     }
-    // -----------------------
-
-    protected function initializeEntityManager(): void
+    public function  setEntityManager(EntityManager $entityManager): void
+    {
+        $this->entityManager = $entityManager;
+    }
+    /**
+     * Getter
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+    public function  getColumns(): array
+    {
+        return $this->columns;
+    }
+    public function getEntityManager(): EntityManager
+    {
+        return $this->entityManager;
+    }
+    public function getBootstrap(): Bootstrap
+    {
+        return $this->bootstrap;
+    }
+    // ----------------------------
+    private function initializeEntityManager(): void
     {
         $this->setBootstrap(Bootstrap::getInstance());
-        if ($this->getBootstrap()->getEntityManager()) {
-            $this->setEntityManager($this->getBootstrap()->getEntityManager());
-        }
-        // var_dump($this->entityManager);
+        $this->setEntityManager($this->bootstrap->getEntityManager());
     }
-
     public function __construct()
     {
-        // $this->initializeEntityManager();
-        // var_dump($this->entityManager);
+        $this->initializeEntityManager();
     }
 }

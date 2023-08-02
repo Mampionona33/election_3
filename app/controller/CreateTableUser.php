@@ -2,16 +2,12 @@
 
 namespace ControllerNamespace;
 
-use Entity\User;
 
-class CreateTableUser extends CreateTable
+class CreateTableUser extends CreateTableIfNotExiste
 {
     public function __construct()
     {
-        echo ("test " . $this->initializeEntityManager());
-
+        parent::__construct();
         $this->setName("User");
-        var_dump($this->name);
-        $this->setColumns($this->entityManager->getClassMetadata(User::class));
     }
 }
