@@ -17,7 +17,7 @@ class UserController
     private $id;
     private $twig;
     private $loader;
-    protected EntityManager $entityManager;
+    // protected EntityManager $entityManager;
     private CreateTableUser $createTable;
     /**
      * getter
@@ -35,10 +35,10 @@ class UserController
     {
         return $this->password;
     }
-    public function getEntityManager(): EntityManager
-    {
-        return $this->entityManager;
-    }
+    // public function getEntityManager(): EntityManager
+    // {
+    //     return $this->entityManager;
+    // }
     public function getTwig(): Environment
     {
         return $this->twig;
@@ -63,10 +63,10 @@ class UserController
     {
         $this->email = $email;
     }
-    public function setEntityManager(EntityManager $entityManager): void
-    {
-        $this->entityManager = $entityManager;
-    }
+    // public function setEntityManager(EntityManager $entityManager): void
+    // {
+    //     $this->entityManager = $entityManager;
+    // }
     public function setTwig(Environment $twig): void
     {
         $this->twig = $twig;
@@ -78,19 +78,18 @@ class UserController
     // -----------------------------------
     public function __construct()
     {
-        $this->initializeEntityManager();
+        // $this->initializeEntityManager();
         $this->setLoader(new FilesystemLoader(__DIR__ . '/../template'));
         $this->setTwig(new Environment($this->loader));
-        // $this->createUserTableIfNotExists();
         $this->setCreatetTable(new CreateTableUser());
         $this->createTable->execute();
     }
 
-    private function initializeEntityManager()
-    {
-        $bootstrap = Bootstrap::getInstance();
-        $this->setEntityManager($bootstrap->getEntityManager());
-    }
+    // private function initializeEntityManager()
+    // {
+    //     $bootstrap = Bootstrap::getInstance();
+    //     $this->setEntityManager($bootstrap->getEntityManager());
+    // }
 
     public function save(): void
     {
@@ -98,27 +97,27 @@ class UserController
         $user->setEmail('admin@gmail.com');
         $user->setPassword("admin");
         $user->setGroupeId(1);
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        // $this->entityManager->persist($user);
+        // $this->entityManager->flush();
     }
 
-    private function createUserTableIfNotExists(): void
-    {
-        $metadata = $this->entityManager->getMetadataFactory()->getAllMetadata();
-        $schemaTool = new SchemaTool($this->entityManager);
-        $tables = $this->entityManager->getConnection()->createSchemaManager()->listTables();
+    // private function createUserTableIfNotExists(): void
+    // {
+    //     $metadata = $this->entityManager->getMetadataFactory()->getAllMetadata();
+    //     $schemaTool = new SchemaTool($this->entityManager);
+    //     $tables = $this->entityManager->getConnection()->createSchemaManager()->listTables();
 
-        $userTableExists = false;
-        foreach ($tables as $table) {
-            if ($table->getName() === 'User') {
-                $userTableExists = true;
-                break;
-            }
-        }
-        if (!$userTableExists) {
-            $schemaTool->createSchema($metadata);
-        }
-    }
+    //     $userTableExists = false;
+    //     foreach ($tables as $table) {
+    //         if ($table->getName() === 'User') {
+    //             $userTableExists = true;
+    //             break;
+    //         }
+    //     }
+    //     if (!$userTableExists) {
+    //         $schemaTool->createSchema($metadata);
+    //     }
+    // }
 
     public function index(): void
     {
