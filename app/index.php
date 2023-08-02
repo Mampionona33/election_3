@@ -12,8 +12,8 @@ require 'vendor/autoload.php';
 
 final class App
 {
-    private $router;
-    private $response;
+    private Router $router;
+    private string $response;
     private string $baseUrl;
 
     /**
