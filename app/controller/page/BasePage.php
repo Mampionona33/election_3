@@ -2,6 +2,7 @@
 
 namespace ControllerNamespace\page;
 
+use Lib\AppEntityManage;
 use Lib\TwigEnvironment;
 use ServiceNamespace\Service;
 use Twig\Environment;
@@ -10,9 +11,14 @@ class BasePage
 {
     protected Environment $twig;
     protected Service $service;
+    protected AppEntityManage $appEntityManager;
     /**
      * setter
      */
+    public function setAppEntityManage(AppEntityManage $appEntityManage): void
+    {
+        $this->appEntityManager = $appEntityManage;
+    }
     public function setTwig(Environment $twig): void
     {
         $this->twig = $twig;
@@ -25,6 +31,10 @@ class BasePage
     /**
      * getter
      */
+    public function getAppEntityManage(): AppEntityManage
+    {
+        return $this->appEntityManager;
+    }
     public function getTwig(): Environment
     {
         return $this->twig;
@@ -36,6 +46,7 @@ class BasePage
 
     public function __construct()
     {
+        $this->setAppEntityManage(AppEntityManage::getInstance());
         $this->setTwig(TwigEnvironment::getInstance()->getTwig());
         $this->setService(new Service());
     }
