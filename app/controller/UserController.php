@@ -3,6 +3,7 @@
 namespace ControllerNamespace;
 
 use App\Bootstrap;
+use ControllerNamespace\candidat\CreateTableCandidat;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
 use Entity\User as EntityUser;
@@ -20,13 +21,17 @@ class UserController
     private $loader;
     // protected EntityManager $entityManager;
     private CreateTableUser $createTable;
+    private CreateTableCandidat $createTableCandidat;
     /**
      * getter
      */
-
+    public function getCreateTableCandidat(): CreateTableCandidat
+    {
+        return    $this->createTableCandidat;
+    }
     public function getCreateTable(): CreateTableUser
     {
-        return $this->createTable;
+        return $this->createTable;;
     }
     public function getEmail(): string
     {
@@ -52,6 +57,10 @@ class UserController
     /**
      * setter
      */
+    public function setCreateTableCandidat(CreateTableCandidat $createTableCandidat): void
+    {
+        $this->createTableCandidat = $createTableCandidat;
+    }
     public function setCreatetTable(CreateTableUser $createTable): void
     {
         $this->createTable = $createTable;
@@ -64,34 +73,23 @@ class UserController
     {
         $this->email = $email;
     }
-    // public function setEntityManager(EntityManager $entityManager): void
-    // {
-    //     $this->entityManager = $entityManager;
-    // }
+
     public function setTwig(Environment $twig): void
     {
         $this->twig = $twig;
     }
-    // public function setLoader(FilesystemLoader $loader): void
-    // {
-    //     $this->loader = $loader;
-    // }
+
     // -----------------------------------
     public function __construct()
     {
-        // $this->initializeEntityManager();
-        // $this->setLoader(new FilesystemLoader(__DIR__ . '/../template'));
-        // $this->setTwig(new Environment($this->loader));
+
         $this->setTwig(TwigEnvironment::getInstance()->getTwig());
         $this->setCreatetTable(new CreateTableUser());
         $this->createTable->execute();
+        $this->setCreateTableCandidat(new CreateTableCandidat());
+        $this->createTableCandidat->execute();
     }
 
-    // private function initializeEntityManager()
-    // {
-    //     $bootstrap = Bootstrap::getInstance();
-    //     $this->setEntityManager($bootstrap->getEntityManager());
-    // }
 
     public function save(): void
     {
@@ -103,23 +101,7 @@ class UserController
         // $this->entityManager->flush();
     }
 
-    // private function createUserTableIfNotExists(): void
-    // {
-    //     $metadata = $this->entityManager->getMetadataFactory()->getAllMetadata();
-    //     $schemaTool = new SchemaTool($this->entityManager);
-    //     $tables = $this->entityManager->getConnection()->createSchemaManager()->listTables();
 
-    //     $userTableExists = false;
-    //     foreach ($tables as $table) {
-    //         if ($table->getName() === 'User') {
-    //             $userTableExists = true;
-    //             break;
-    //         }
-    //     }
-    //     if (!$userTableExists) {
-    //         $schemaTool->createSchema($metadata);
-    //     }
-    // }
 
     public function index(): void
     {
