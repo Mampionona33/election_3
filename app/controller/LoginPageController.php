@@ -124,6 +124,7 @@ class LoginPageController extends UserController
     public function render(): void
     {
         echo $this->getAppTwigEnvironment()->getTwig()->render("loginpage.html.twig");
+        exit();
     }
     public function test(): void
     {
