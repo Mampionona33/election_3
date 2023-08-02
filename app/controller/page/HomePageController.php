@@ -47,7 +47,7 @@ class HomePageController extends BasePage
     private function getCandidatListFromDb(): void
     {
         $candidat = $this->appEntityManage->getEntityManager();
-        var_dump($candidat->getRepository("User"));
+        var_dump($candidat->getRepository("Candidat"));
     }
 
     public function __construct()
