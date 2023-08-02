@@ -14,39 +14,40 @@ final class App
 {
     private $router;
     private $response;
-    private $entityManager;
+    private string $baseUrl;
 
     /**
-     * getter and setter
+     * getter
      */
-    public function setEntityManager(EntityManager $entityManager): void
-    {
-        $this->entityManager = $entityManager;
-    }
-    public function getEntityManager(): EntityManager
-    {
-        return $this->entityManager;
-    }
-    public function setResponse(string $response): void
-    {
-        $this->response = $response;
-    }
 
+    public function getBasUrl(): string
+    {
+        return $this->baseUrl;
+    }
     public function getResponse(): string
     {
         return $this->response;
-    }
-
-    public function setRouter(Router $router): void
-    {
-        $this->router = $router;
     }
 
     public function getRouter(): Router
     {
         return $this->router;
     }
-
+    /**
+     * Setter
+     */
+    public function setRouter(Router $router): void
+    {
+        $this->router = $router;
+    }
+    public function setBaseUrl(string $baseUrl): void
+    {
+        $this->baseUrl = $baseUrl;
+    }
+    public function setResponse(string $response): void
+    {
+        $this->response = $response;
+    }
     // --------------------------------------
 
     private function handleError(): void
@@ -62,9 +63,10 @@ final class App
         }
     }
 
-    public function __construct()
+    public function __construct(string $baseUrl)
     {
-        $this->setRouter(new Router("http://localhost:8081"));
+        $this->setBaseUrl($baseUrl);
+        $this->setRouter(new Router($this->baseUrl));
         $this->router->namespace("ControllerNamespace");
     }
 
@@ -116,5 +118,5 @@ final class App
     }
 }
 
-$app = new App();
+$app = new App("https://mampionona33-organic-couscous-64q9q79vpq7h49gw-8081.preview.app.github.dev");
 $app();

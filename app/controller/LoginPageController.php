@@ -12,10 +12,12 @@ class LoginPageController extends UserController
     private $appTwigEnvironment;
     private $appEntityManage;
     private $router;
+    
 
     /**
      * getter
      */
+   
     public function getRouter(): Router
     {
         return $this->router;
@@ -31,6 +33,7 @@ class LoginPageController extends UserController
     /**
      * Setter
      */
+    
     public function setRouter(Router $router): void
     {
         $this->router = $router;
