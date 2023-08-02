@@ -4,6 +4,7 @@ namespace ControllerNamespace;
 
 use CoffeeCode\Router\Router;
 use Entity\User;
+use Exception;
 use Lib\AppEntityManage;
 use Lib\AppTwigEnvironment;
 
@@ -12,12 +13,12 @@ class LoginPageController extends UserController
     private $appTwigEnvironment;
     private $appEntityManage;
     private $router;
-    
+
 
     /**
      * getter
      */
-   
+
     public function getRouter(): Router
     {
         return $this->router;
@@ -33,7 +34,7 @@ class LoginPageController extends UserController
     /**
      * Setter
      */
-    
+
     public function setRouter(Router $router): void
     {
         $this->router = $router;
@@ -56,10 +57,7 @@ class LoginPageController extends UserController
         $this->setAppEntityManage(AppEntityManage::getInstance());
     }
 
-    public function render(): void
-    {
-        echo $this->getAppTwigEnvironment()->getTwig()->render("loginpage.html.twig");
-    }
+
 
     private function initializeEmailValue(): void
     {
@@ -79,11 +77,22 @@ class LoginPageController extends UserController
         }
     }
 
-    private function verifyPassword(): bool
+    private function verifyIfListUserExist(): bool
     {
-        $user = $this->getUserByEmail();
-        $userPassword = $user->getPassword();
-        return $this->getPassword() === $userPassword;
+        if ($this->getUserByEmail()) {
+            return true;
+        }
+        return false;
+    }
+
+    private function verifyPasswordCorrect(): bool
+    {
+        if ($this->verifyIfListUserExist()) {
+            $user = $this->getUserByEmail();
+            $userPassword = $user->getPassword();
+            return $this->getPassword() === $userPassword;
+        }
+        return false;
     }
 
     private function getUserByEmail()
@@ -105,11 +114,18 @@ class LoginPageController extends UserController
     {
         $this->initializeEmailValue();
         $this->initializePasswordValue();
-        if ($this->verifyPassword()) {
+        if ($this->verifyPasswordCorrect()) {
             $this->assigneUserToSessionUser();
+        } else {
+            // throw new Exception("Error Processing Request", 1);
+            echo $this->getAppTwigEnvironment()->getTwig()->render("loginpage.html.twig");
         }
     }
 
+    public function render(): void
+    {
+        echo $this->getAppTwigEnvironment()->getTwig()->render("loginpage.html.twig");
+    }
     public function test(): void
     {
         echo "test";

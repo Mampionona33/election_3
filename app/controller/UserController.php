@@ -6,6 +6,7 @@ use App\Bootstrap;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
 use Entity\User as EntityUser;
+use Lib\TwigEnvironment;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -43,10 +44,10 @@ class UserController
     {
         return $this->twig;
     }
-    public function getLoader(): FilesystemLoader
-    {
-        return $this->loader;
-    }
+    // public function getLoader(): FilesystemLoader
+    // {
+    //     return $this->loader;
+    // }
 
     /**
      * setter
@@ -71,16 +72,17 @@ class UserController
     {
         $this->twig = $twig;
     }
-    public function setLoader(FilesystemLoader $loader): void
-    {
-        $this->loader = $loader;
-    }
+    // public function setLoader(FilesystemLoader $loader): void
+    // {
+    //     $this->loader = $loader;
+    // }
     // -----------------------------------
     public function __construct()
     {
         // $this->initializeEntityManager();
-        $this->setLoader(new FilesystemLoader(__DIR__ . '/../template'));
-        $this->setTwig(new Environment($this->loader));
+        // $this->setLoader(new FilesystemLoader(__DIR__ . '/../template'));
+        // $this->setTwig(new Environment($this->loader));
+        $this->setTwig(TwigEnvironment::getInstance()->getTwig());
         $this->setCreatetTable(new CreateTableUser());
         $this->createTable->execute();
     }
