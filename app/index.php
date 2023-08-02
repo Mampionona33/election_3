@@ -2,7 +2,9 @@
 // Gestion des erreurs probables
 
 use CoffeeCode\Router\Router;
+// use ControllerNamespace\HomePageController;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query\Expr\Func;
 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
@@ -67,7 +69,6 @@ final class App
     {
         $this->setBaseUrl($baseUrl);
         $this->setRouter(new Router($this->baseUrl));
-        $this->router->namespace("ControllerNamespace");
     }
 
     private function redirectToDashboard(): void
@@ -94,18 +95,32 @@ final class App
                     // session_destroy();
                     exit();
                 }
-                $this->router->get("/", "UserController:index");
+                $this->router->get("/", "HomePageController:render");
             }
         }
     }
 
+    private function handeHome(): void
+    {
+        $this->router->namespace("ControllerNamespace\page");
+        $this->router->get("/", "HomePageController:render");
+    }
+
+    private function handleLogin(): void
+    {
+        $this->router->namespace("ControllerNamespace");
+        $this->router->get("/login", "LoginPageController:render");
+        $this->router->post("/login", "LoginPageController:initializeSession");
+    }
 
     public function __invoke()
     {
-        $this->router->get("/", "UserController:index");
+        // $this->router->namespace("ControllerNamespace");
+        // $this->router->get("/", "UserController:index");
+        $this->handeHome();
+        $this->handleLogin();
         $this->router->get("/dasboard", "LoginPageController:test");
-        $this->router->get("/login", "LoginPageController:render");
-        $this->router->post("/login", "LoginPageController:initializeSession");
+
 
         $this->handleError();
         $this->verifySessionExist();

@@ -37,6 +37,10 @@ final class AppTwigEnvironment extends Environment
         $this->twig = $twig;
     }
 
+    public function addLoader(): void
+    {
+    }
+
     private function __construct()
     {
         $this->setLoader(new FilesystemLoader(__DIR__ . "/../template"));
