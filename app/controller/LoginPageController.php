@@ -117,8 +117,7 @@ class LoginPageController extends UserController
         if ($this->verifyPasswordCorrect()) {
             $this->assigneUserToSessionUser();
         } else {
-            // throw new Exception("Error Processing Request", 1);
-            echo $this->getAppTwigEnvironment()->getTwig()->render("loginpage.html.twig");
+            $this->render();
         }
     }
 
