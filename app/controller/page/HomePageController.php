@@ -11,9 +11,14 @@ class HomePageController extends BasePage
     private array $listCandidat;
     private CreateTableCandidat $createTableCandidat;
     private $appEntityManage;
+    private $firstCandidat;
     /**
      * Setter
      */
+    public function setFirstCandidat($firstCandidat): void
+    {
+        $this->firstCandidat = $firstCandidat;
+    }
     public function setAppEntityManage(AppEntityManage $appEntityManage): void
     {
         $this->appEntityManage = $appEntityManage;
@@ -26,6 +31,10 @@ class HomePageController extends BasePage
     public function setListCandidat(array $listCandidat): void
     {
         $this->listCandidat = $listCandidat;
+    }
+    public function getFirstCandidat()
+    {
+        return $this->firstCandidat;
     }
 
     /**
@@ -44,11 +53,18 @@ class HomePageController extends BasePage
         return $this->listCandidat;
     }
 
-    private function getCandidatListFromDb(): void
+    private function initializeFirstCandidat(): void
     {
-        $candidat = $this->appEntityManage->getEntityManager()->getRepository(Candidat::class)->findAll();
-        var_dump($candidat);
+        $this->setFirstCandidat($this->getFirstCandidatFromBack());
     }
+
+    private function  getFirstCandidatFromBack(): array
+    {
+        $dql = 'SELECT c FROM Entity\Candidat c WHERE c.id = (SELECT MIN(c2.id) FROM Entity\Candidat c2)';
+        $query = $this->appEntityManage->getEntityManager()->createQuery($dql);
+        return $query->getResult();
+    }
+
 
     public function __construct()
     {
@@ -56,11 +72,12 @@ class HomePageController extends BasePage
         $this->setAppEntityManage(AppEntityManage::getInstance());
         $this->setCreateTableCandidat(new CreateTableCandidat());
         $this->createTableCandidat->execute();
+        $this->initializeFirstCandidat();
     }
 
     public function render(): void
     {
-        var_dump($this->getCandidatListFromDb());
+        var_dump($this->firstCandidat);
         echo $this->getTwig()->render("homepage.html.twig");
     }
 }
