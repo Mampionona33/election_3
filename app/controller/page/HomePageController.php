@@ -10,11 +10,16 @@ class HomePageController extends BasePage
 {
     private array $listCandidat;
     private CreateTableCandidat $createTableCandidat;
-    private $appEntityManage;
-    private $firstCandidat;
+    private AppEntityManage $appEntityManage;
+    private array $firstCandidat;
+    private array $candidatWhichHasMaximumPoint;
     /**
      * Setter
      */
+    public function setCandidatWhichHasMaximumPoint(array $candidatWhichHasMaximumPoint): void
+    {
+        $this->candidatWhichHasMaximumPoint = $candidatWhichHasMaximumPoint;
+    }
     public function setFirstCandidat($firstCandidat): void
     {
         $this->firstCandidat = $firstCandidat;
@@ -40,6 +45,10 @@ class HomePageController extends BasePage
     /**
      * Getter
      */
+    public function getCandidatWhichHasMaximumPoint(): array
+    {
+        return $this->candidatWhichHasMaximumPoint;
+    }
     public function getAppEntityManage(): AppEntityManage
     {
         return $this->appEntityManage;
