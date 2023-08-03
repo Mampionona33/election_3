@@ -9,7 +9,7 @@
       "ServiceNamespace\\": "service/",
       "RouterNamespace\\": "router/",
       "Lib\\": "lib/",
-      "Entity\\": "Entity/"
+      "Entity\\": "entity/"
     }
   },
   "authors": [

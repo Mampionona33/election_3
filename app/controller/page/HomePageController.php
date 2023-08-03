@@ -46,8 +46,8 @@ class HomePageController extends BasePage
 
     private function getCandidatListFromDb(): void
     {
-        $candidat = $this->appEntityManage->getEntityManager();
-        var_dump($candidat->getRepository("Candidat"));
+        $candidat = $this->appEntityManage->getEntityManager()->getRepository(Candidat::class)->findAll();
+        var_dump($candidat);
     }
 
     public function __construct()
@@ -55,7 +55,7 @@ class HomePageController extends BasePage
         parent::__construct();
         $this->setAppEntityManage(AppEntityManage::getInstance());
         $this->setCreateTableCandidat(new CreateTableCandidat());
-        // $this->createTableCandidat->execute();
+        $this->createTableCandidat->execute();
     }
 
     public function render(): void
