@@ -64,14 +64,26 @@ class HomePageController extends BasePage
 
     private function initializeFirstCandidat(): void
     {
-        $this->setFirstCandidat($this->getFirstCandidatFromBack());
+        $this->setFirstCandidat($this->getFirstCandidatFromDB());
     }
 
-    private function  getFirstCandidatFromBack(): array
+    private function  getFirstCandidatFromDB(): array
     {
         $dql = 'SELECT c FROM Entity\Candidat c WHERE c.id = (SELECT MIN(c2.id) FROM Entity\Candidat c2)';
         $query = $this->appEntityManage->getEntityManager()->createQuery($dql);
         return $query->getResult();
+    }
+
+    private function getCandidatWhichHasMaxPointFromDb(): array
+    {
+        $dql = 'SELECT c FROM Entity\Candidat c WHERE c.nb_voix = (SELECT MAX(c2.nb_voix) FROM Entity\Candidat c2)';
+        $query = $this->appEntityManage->getEntityManager()->createQuery($dql);
+        return $query->getResult();
+    }
+
+    public function initializeCandidatWhichHasMaxPoint(): void
+    {
+        $this->setCandidatWhichHasMaximumPoint($this->getCandidatWhichHasMaxPointFromDb());
     }
 
 
@@ -82,11 +94,13 @@ class HomePageController extends BasePage
         $this->setCreateTableCandidat(new CreateTableCandidat());
         $this->createTableCandidat->execute();
         $this->initializeFirstCandidat();
+        $this->initializeCandidatWhichHasMaxPoint();
     }
 
     public function render(): void
     {
         var_dump($this->firstCandidat);
+        var_dump($this->candidatWhichHasMaximumPoint);
         echo $this->getTwig()->render("homepage.html.twig");
     }
 }
