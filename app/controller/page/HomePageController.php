@@ -13,9 +13,19 @@ class HomePageController extends BasePage
     private AppEntityManage $appEntityManage;
     private array $firstCandidat;
     private array $candidatWhichHasMaximumPoint;
+    private int $firstCandidatPercentagePoint;
+    private array $allCandidatData;
     /**
      * Setter
      */
+    public function setAllCandidatData(array $allCandidatData): void
+    {
+        $this->allCandidatData = $allCandidatData;
+    }
+    public function setFirstCandidatPercentagePoint(int $firstCandidatPercentagePoint): void
+    {
+        $this->firstCandidatPercentagePoint = $firstCandidatPercentagePoint;
+    }
     public function setCandidatWhichHasMaximumPoint(array $candidatWhichHasMaximumPoint): void
     {
         $this->candidatWhichHasMaximumPoint = $candidatWhichHasMaximumPoint;
@@ -45,6 +55,14 @@ class HomePageController extends BasePage
     /**
      * Getter
      */
+    public function getAllCandidatData(): array
+    {
+        return $this->allCandidatData;
+    }
+    public function getFirstCandidatPercentagePoint(): int
+    {
+        return $this->firstCandidatPercentagePoint;
+    }
     public function getCandidatWhichHasMaximumPoint(): array
     {
         return $this->candidatWhichHasMaximumPoint;
@@ -81,9 +99,25 @@ class HomePageController extends BasePage
         return $query->getResult();
     }
 
+    private function getAllCandidatDataFromDB(): array
+    {
+        return $this->appEntityManage->getEntityManager()->getRepository(Candidat::class)->findAll();
+    }
+
+    public function initializeAllCandidatData(): void
+    {
+        $this->setAllCandidatData($this->getAllCandidatDataFromDB());
+    }
+
     public function initializeCandidatWhichHasMaxPoint(): void
     {
         $this->setCandidatWhichHasMaximumPoint($this->getCandidatWhichHasMaxPointFromDb());
+    }
+
+
+
+    public function calculPercentagePointOfFirstCandidat(): void
+    {
     }
 
 
@@ -95,12 +129,14 @@ class HomePageController extends BasePage
         $this->createTableCandidat->execute();
         $this->initializeFirstCandidat();
         $this->initializeCandidatWhichHasMaxPoint();
+        $this->initializeAllCandidatData();
     }
 
     public function render(): void
     {
         var_dump($this->firstCandidat);
         var_dump($this->candidatWhichHasMaximumPoint);
+        var_dump($this->allCandidatData);
         echo $this->getTwig()->render("homepage.html.twig");
     }
 }
