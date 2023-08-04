@@ -2,9 +2,6 @@
 // Gestion des erreurs probables
 
 use CoffeeCode\Router\Router;
-// use ControllerNamespace\HomePageController;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Query\Expr\Func;
 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
@@ -121,7 +118,6 @@ final class App
         $this->handleLogin();
         $this->router->get("/dasboard", "LoginPageController:test");
 
-
         $this->handleError();
         $this->verifySessionExist();
 
@@ -133,5 +129,6 @@ final class App
     }
 }
 
-$app = new App("https://mampionona33-organic-couscous-64q9q79vpq7h49gw-8081.preview.app.github.dev");
+// $app = new App("https://mampionona33-organic-couscous-64q9q79vpq7h49gw-8081.preview.app.github.dev");
+$app = new App("http://localhost:8081");
 $app();
