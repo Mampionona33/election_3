@@ -3,6 +3,7 @@
 namespace ControllerNamespace\page;
 
 use ControllerNamespace\candidat\CreateTableCandidat;
+use ControllerNamespace\candidat\FirstCandidat;
 use Entity\Candidat;
 use Lib\AppEntityManage;
 
@@ -82,7 +83,8 @@ class HomePageController extends BasePage
 
     private function initializeFirstCandidat(): void
     {
-        $this->setFirstCandidat($this->getFirstCandidatFromDB());
+        // $this->setFirstCandidat($this->getFirstCandidatFromDB());
+        $this->setFirstCandidat(new FirstCandidat());
     }
 
     private function  getFirstCandidatFromDB(): array
