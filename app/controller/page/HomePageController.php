@@ -71,10 +71,10 @@ class HomePageController extends BasePage
     public function __construct()
     {
         parent::__construct();
-        $this->setFirstCandidatResult(new FirstCandidatResult());
         $this->setAppEntityManage(AppEntityManage::getInstance());
         $this->setCreateTableCandidat(new CreateTableCandidat());
         $this->createTableCandidat->execute();
+        $this->setFirstCandidatResult(new FirstCandidatResult());
     }
 
     public function render(): void
