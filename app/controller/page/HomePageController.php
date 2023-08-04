@@ -2,8 +2,11 @@
 
 namespace ControllerNamespace\page;
 
+use ControllerNamespace\candidat\CandidatBase;
+use ControllerNamespace\candidat\CandidatController;
 use ControllerNamespace\candidat\CreateTableCandidat;
 use ControllerNamespace\candidat\FirstCandidat;
+use ControllerNamespace\FirstCandidatResult;
 use Entity\Candidat;
 use Lib\AppEntityManage;
 
@@ -11,10 +14,15 @@ class HomePageController extends BasePage
 {
     private CreateTableCandidat $createTableCandidat;
     private AppEntityManage $appEntityManage;
+    private CandidatController $firstCandidatResult;
 
     /**
      * Setter
      */
+    public function setFirstCandidatResult(CandidatController $firstCandidatResult): void
+    {
+        $this->firstCandidatResult = $firstCandidatResult;
+    }
     public function setAppEntityManage(AppEntityManage $appEntityManage): void
     {
         $this->appEntityManage = $appEntityManage;
@@ -63,6 +71,7 @@ class HomePageController extends BasePage
     public function __construct()
     {
         parent::__construct();
+        // $this->setFirstCandidatResult(new CandidatController());
         $this->setAppEntityManage(AppEntityManage::getInstance());
         $this->setCreateTableCandidat(new CreateTableCandidat());
         $this->createTableCandidat->execute();
@@ -70,6 +79,7 @@ class HomePageController extends BasePage
 
     public function render(): void
     {
+        var_dump($this->firstCandidatResult);
         echo $this->getTwig()->render("homepage.html.twig");
     }
 }
