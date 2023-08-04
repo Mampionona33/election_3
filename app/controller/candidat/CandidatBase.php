@@ -5,7 +5,7 @@ namespace ControllerNamespace\candidat;
 use ControllerNamespace\candidat\AbstractCandidat as CandidatAbstractCandidat;
 use Lib\AppEntityManage;
 
-abstract class CandidatBase extends CandidatAbstractCandidat
+class CandidatBase extends CandidatAbstractCandidat
 {
     /**
      * Setter
@@ -62,11 +62,15 @@ abstract class CandidatBase extends CandidatAbstractCandidat
 
     private function initializeName(): void
     {
-        $this->setName($this->getDataByQueryFromDb()["name"]);
+        if (isset($this->getDataByQueryFromDb()["name"])) {
+            $this->setName($this->getDataByQueryFromDb()["name"]);
+        }
     }
     private function initializeNbVoix(): void
     {
-        $this->setNbVoix($this->getDataByQueryFromDb()["nb_voix"]);
+        if (isset($this->getDataByQueryFromDb()["nb_voix"])) {
+            $this->setNbVoix($this->getDataByQueryFromDb()["nb_voix"]);
+        }
     }
 
     public function initializeAppEntityManage(): void
