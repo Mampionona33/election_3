@@ -14,12 +14,12 @@ class HomePageController extends BasePage
 {
     private CreateTableCandidat $createTableCandidat;
     private AppEntityManage $appEntityManage;
-    private CandidatController $firstCandidatResult;
+    private FirstCandidatResult $firstCandidatResult;
 
     /**
      * Setter
      */
-    public function setFirstCandidatResult(CandidatController $firstCandidatResult): void
+    public function setFirstCandidatResult(FirstCandidatResult $firstCandidatResult): void
     {
         $this->firstCandidatResult = $firstCandidatResult;
     }
@@ -71,7 +71,7 @@ class HomePageController extends BasePage
     public function __construct()
     {
         parent::__construct();
-        // $this->setFirstCandidatResult(new CandidatController());
+        $this->setFirstCandidatResult(new FirstCandidatResult());
         $this->setAppEntityManage(AppEntityManage::getInstance());
         $this->setCreateTableCandidat(new CreateTableCandidat());
         $this->createTableCandidat->execute();
@@ -79,7 +79,7 @@ class HomePageController extends BasePage
 
     public function render(): void
     {
-        var_dump($this->firstCandidatResult);
+        $this->firstCandidatResult;
         echo $this->getTwig()->render("homepage.html.twig");
     }
 }
