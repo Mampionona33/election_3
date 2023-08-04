@@ -52,24 +52,6 @@ class FirstCandidatResult
     }
 
     // ---------------------------------------
-
-    private function  getFirstCandidatFromDB(): array
-    {
-        $this->setQuery('SELECT c FROM Entity\Candidat c WHERE c.id = (SELECT MIN(c2.id) FROM Entity\Candidat c2)');
-        return $this->appEntityManage->getEntityManager()->createQuery($this->query)->getResult();
-    }
-
-    private function getCandidatWhichHasMaxPointFromDb(): array
-    {
-        $this->setQuery('SELECT c FROM Entity\Candidat c WHERE c.nb_voix = (SELECT MAX(c2.nb_voix) FROM Entity\Candidat c2)');
-        return $this->appEntityManage->getEntityManager()->createQuery($this->query)->getResult();
-    }
-
-    private function getAllCandidatDataFromDB(): array
-    {
-        return $this->appEntityManage->getEntityManager()->getRepository(Candidat::class)->findAll();
-    }
-
     private function getFirstCandidatPercentage(): float
     {
         $this->setQuery('SELECT ROUND((nb_voix * 100) / (SELECT SUM(nb_voix) FROM Candidat)) AS percentage 
