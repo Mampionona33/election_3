@@ -4,7 +4,6 @@ namespace ControllerNamespace;
 
 use CoffeeCode\Router\Router;
 use Entity\User;
-use Exception;
 use Lib\AppEntityManage;
 use Lib\AppTwigEnvironment;
 
@@ -13,8 +12,6 @@ class LoginPageController extends UserController
     private $appTwigEnvironment;
     private $appEntityManage;
     private $router;
-
-
     /**
      * getter
      */
@@ -56,8 +53,6 @@ class LoginPageController extends UserController
         $this->setAppTwigEnvironment(AppTwigEnvironment::getInstance());
         $this->setAppEntityManage(AppEntityManage::getInstance());
     }
-
-
 
     private function initializeEmailValue(): void
     {
