@@ -79,7 +79,9 @@ class HomePageController extends BasePage
 
     public function render(): void
     {
-        $this->firstCandidatResult;
-        echo $this->getTwig()->render("homepage.html.twig");
+        echo $this->getTwig()->render("homepage.html.twig", [
+            "firstCandidatResult" => $this->firstCandidatResult->getResult(),
+            "firstCandidatName" => $this->firstCandidatResult->getFirstCandidatName()
+        ]);
     }
 }

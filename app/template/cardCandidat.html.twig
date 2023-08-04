@@ -1,14 +1,18 @@
-{% extends '/components/card.html.twig' %}
+{% extends 'components/card.html.twig' %}
 
 {% block card_title %}
-	{% if services.candidats %}
-		{% for item in services.candidats %}
-			<h3>Le resultat pour le candidat :
-				{{item.name}}</h3>
-		{% endfor %}
+	{% if firstCandidatName %}
+		<h3>Le résultat pour le candidat :
+			{{ firstCandidatName }}</h3>
 	{% else %}
 		<h3>Aucun candidat trouvé</h3>
 	{% endif %}
+{% endblock %}
 
+{% block icon %}
+	how_to_vote
+{% endblock %}
 
+{% block message %}
+	{{firstCandidatResult}}
 {% endblock %}

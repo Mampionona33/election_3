@@ -1,20 +1,17 @@
 <div class="global-data-card m-3">
 	<div class="card border-0 shadow-sm">
 		<div class="card-body" style="background-color: $this->backgroundColor; color: $this->textColor;">
-			<div class="d-flex align-items-center">
-				<h5 class="card-title text-capitalize flex-grow-1"> {% block card_title %}{% endblock %}
+			<div class="d-flex align-items-center justify-content-space-between">
+				<h5 class="card-title text-capitalize "> {% block card_title %}{% endblock %}
 					</h5>
-					{% if icon %}
-						<span class="material-icons-outlined rounded-circle p-1 m-2" style="background-color:$iconBackgroundColor; color:$iconTextColor; font-size:2.5rem;"> {% block icon %}{% endblock %}
+					<div class="d-flex flex-grow-1 justify-content-center">
+						<span class="material-icons-outlined rounded-circle p-1 m-2 " style="background-color:$iconBackgroundColor; color:$iconTextColor; font-size:2.5rem;"> {% block icon %}{% endblock %}
 							</span>
-						{% endif %}
+						</div>
 					</div>
 					<hr class="hr">
-					<h6 class="d-flex card-subtitle mb-2 mt-2" style="color: $this->textColor;">
-						{% if message %}
-							{% block message %}{% endblock %}
-						{% endif %}
-					</h6>
+					<h6 class="d-flex card-subtitle mb-2 mt-2" style="color: $this->textColor;"> {% block message %}{% endblock %}
+						</h6>
+					</div>
 				</div>
 			</div>
-		</div>
