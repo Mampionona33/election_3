@@ -84,15 +84,16 @@ final class App
 
     private function handleHomePage(): void
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            if ($this->verifySessionExist()) {
-                $requestedRoute = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-                if ($requestedRoute === '/') {
-                    $this->router->redirect("/dasboard");
-                    // session_destroy();
+        $requestedRoute = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+        if ($requestedRoute === '/' || $requestedRoute === '/login') {
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                if ($this->verifySessionExist()) {
+                    $this->router->redirect("/dashboard");
                     exit();
+                } else {
+                    $this->router->get("/", "HomePageController:render");
                 }
-                $this->router->get("/", "HomePageController:render");
             }
         }
     }
