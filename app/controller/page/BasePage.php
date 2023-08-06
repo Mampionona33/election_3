@@ -2,6 +2,7 @@
 
 namespace ControllerNamespace\page;
 
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Lib\AppEntityManage;
 use Lib\TwigEnvironment;
 use ServiceNamespace\Service;
@@ -12,9 +13,19 @@ class BasePage
     protected Environment $twig;
     protected Service $service;
     protected AppEntityManage $appEntityManager;
+    protected string $query;
+    protected ResultSetMappingBuilder $resultSetMappingBuilder;
     /**
      * setter
      */
+    public function setResultSetMappingBuilder(ResultSetMappingBuilder $resultSetMappingBuilder): void
+    {
+        $this->resultSetMappingBuilder = $resultSetMappingBuilder;
+    }
+    public function setQuery(string $query): void
+    {
+        $this->query = $query;
+    }
     public function setAppEntityManage(AppEntityManage $appEntityManage): void
     {
         $this->appEntityManager = $appEntityManage;
@@ -31,6 +42,14 @@ class BasePage
     /**
      * getter
      */
+    public function getResultSetMappingBuilder(): ResultSetMappingBuilder
+    {
+        return $this->resultSetMappingBuilder;
+    }
+    public function getQuery(): string
+    {
+        return $this->query;
+    }
     public function getAppEntityManage(): AppEntityManage
     {
         return $this->appEntityManager;

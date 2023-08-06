@@ -71,10 +71,10 @@ final class App
     private function redirectToDashboard(): void
     {
         if ($this->verifySessionExist()) {
-            $this->router->redirect("/dasboard");
-            exit();
+            $this->router->redirect("/dashboard");
         }
     }
+
 
     private function  verifySessionExist(): bool
     {
@@ -95,6 +95,13 @@ final class App
                     $this->router->get("/", "HomePageController:render");
                 }
             }
+        } else if ($requestedRoute === '/dashboard') {
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                if (!$this->verifySessionExist()) {
+                    $this->router->redirect("/login");
+                    exit();
+                }
+            }
         }
     }
 
@@ -104,21 +111,25 @@ final class App
         $this->router->get("/", "HomePageController:render");
     }
 
+    private function handleDashboard(): void
+    {
+        $this->router->namespace("ControllerNamespace\page");
+        $this->router->get("/dashboard", "HomePageController:render");
+    }
+
     private function handleLogin(): void
     {
-        $this->router->namespace("ControllerNamespace");
+        $this->router->namespace("ControllerNamespace\page");
         $this->router->get("/login", "LoginPageController:render");
         $this->router->post("/login", "LoginPageController:initializeSession");
     }
 
     public function __invoke()
     {
-        // $this->router->namespace("ControllerNamespace");
-        // $this->router->get("/", "UserController:index");
+
         $this->handeHome();
         $this->handleLogin();
-        $this->router->get("/dasboard", "LoginPageController:test");
-
+        $this->handleDashboard();
         $this->handleError();
         $this->verifySessionExist();
 
