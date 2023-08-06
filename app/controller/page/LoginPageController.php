@@ -33,10 +33,12 @@ class LoginPageController extends BasePage
         return $this->appEntityManager->getEntityManager()->createNativeQuery($this->query, $this->resultSetMappingBuilder)->getSingleScalarResult();
     }
 
-    private function getUserLoggedData()
+    private function getUserLoggedData(): ?User
     {
-        return $this->appEntityManager->getEntityManager()->getRepository(User::class)->findOneBy(["email" => $_POST["email"]]);
+        $userRepository = $this->appEntityManager->getEntityManager()->getRepository(User::class);
+        return $userRepository->findOneBy(["email" => $_POST["email"]]);
     }
+
 
     private function verifyPasswordCorrect(): bool
     {
@@ -53,6 +55,21 @@ class LoginPageController extends BasePage
                 session_start();
             }
             $_SESSION["user"] = $this->getUserLoggedData();
+        }
+    }
+
+    public function destroySession(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+            // Détruire la session
+            session_unset();
+            session_destroy();
+            // Rediriger vers la page d'accueil
+            header("Location: /");
+            exit();
         }
     }
 

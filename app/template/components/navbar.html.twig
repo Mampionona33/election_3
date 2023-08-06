@@ -1,4 +1,4 @@
-{%if showNabar is not defined or showNavbar%}
+{% if showNabar is not defined or showNavbar %}
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between vw-100">
 		<div class="container d-flex m-2">
 			{% if user %}
@@ -9,6 +9,9 @@
 		</div>
 		<div class="navbar-collapse justify-content-end">
 			<ul class="navbar-nav mr-2">
+				<li class="nav-item">
+					<p class="nav-link text-primary">{{ user.email }}</p>
+				</li>
 				{% if user %}
 					<li class="nav-item">
 						<a class="nav-link" href="logout">Déconnexion</a>
@@ -18,7 +21,7 @@
 						<a class="nav-link" href="login">Connexion</a>
 					</li>
 				{% endif %}
-			</div>
-		</nav>
-
-	{% endif %}
+			</ul>
+		</div>
+	</nav>
+{% endif %}

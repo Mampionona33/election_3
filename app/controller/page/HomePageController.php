@@ -2,12 +2,9 @@
 
 namespace ControllerNamespace\page;
 
-use ControllerNamespace\candidat\CandidatBase;
-use ControllerNamespace\candidat\CandidatController;
 use ControllerNamespace\candidat\CreateTableCandidat;
-use ControllerNamespace\candidat\FirstCandidat;
 use ControllerNamespace\FirstCandidatResult;
-use Entity\Candidat;
+use Entity\User;
 use Lib\AppEntityManage;
 
 class HomePageController extends BasePage
@@ -65,17 +62,13 @@ class HomePageController extends BasePage
     // {
     //     return $this->appEntityManage->getEntityManager()->getRepository(Candidat::class)->findAll();
     // }
-    private function verifyIfUserSessionExist(): array
+    private function getUserSession(): ?User
     {
         if (isset($_SESSION["user"])) {
             return   $_SESSION["user"];
         }
-        return [];
+        return null;
     }
-
-    // private function getUserSession(): array
-    // {
-    // }
 
     public function __construct()
     {
@@ -88,10 +81,10 @@ class HomePageController extends BasePage
 
     public function render(): void
     {
-        var_dump($this->verifyIfUserSessionExist());
         echo $this->getTwig()->render("homepage.html.twig", [
             "firstCandidatResult" => $this->firstCandidatResult->getResult(),
-            "firstCandidatName" => $this->firstCandidatResult->getFirstCandidatName()
+            "firstCandidatName" => $this->firstCandidatResult->getFirstCandidatName(),
+            "user" => $this->getUserSession()
         ]);
         exit();
     }

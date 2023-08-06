@@ -68,10 +68,12 @@ final class App
         $this->setRouter(new Router($this->baseUrl));
     }
 
-    private function redirectToDashboard(): void
+    private function homePageRedirection(): void
     {
         if ($this->verifySessionExist()) {
             $this->router->redirect("/dashboard");
+        } else {
+            $this->router->redirect("/");
         }
     }
 
@@ -85,24 +87,6 @@ final class App
     private function handleHomePage(): void
     {
         $requestedRoute = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-
-        if ($requestedRoute === '/' || $requestedRoute === '/login') {
-            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-                if ($this->verifySessionExist()) {
-                    $this->router->redirect("/dashboard");
-                    exit();
-                } else {
-                    $this->router->get("/", "HomePageController:render");
-                }
-            }
-        } else if ($requestedRoute === '/dashboard') {
-            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-                if (!$this->verifySessionExist()) {
-                    $this->router->redirect("/login");
-                    exit();
-                }
-            }
-        }
     }
 
     private function handeHome(): void
@@ -117,6 +101,14 @@ final class App
         $this->router->get("/dashboard", "HomePageController:render");
     }
 
+
+    private function routLogout(): void
+    {
+        $this->router->namespace("ControllerNamespace\page");
+        $this->router->get("/logout", "LoginPageController:destroySession");
+    }
+
+
     private function handleLogin(): void
     {
         $this->router->namespace("ControllerNamespace\page");
@@ -130,13 +122,14 @@ final class App
         $this->handeHome();
         $this->handleLogin();
         $this->handleDashboard();
+        $this->routLogout();
         $this->handleError();
         $this->verifySessionExist();
 
         $this->handleHomePage();
 
         $this->setResponse($this->router->dispatch());
-        $this->redirectToDashboard();
+        $this->homePageRedirection();
         $this->redirectOnError();
     }
 }
