@@ -65,8 +65,17 @@ class HomePageController extends BasePage
     // {
     //     return $this->appEntityManage->getEntityManager()->getRepository(Candidat::class)->findAll();
     // }
+    private function verifyIfUserSessionExist(): array
+    {
+        if (isset($_SESSION["user"])) {
+            return   $_SESSION["user"];
+        }
+        return [];
+    }
 
-
+    // private function getUserSession(): array
+    // {
+    // }
 
     public function __construct()
     {
@@ -79,9 +88,11 @@ class HomePageController extends BasePage
 
     public function render(): void
     {
+        var_dump($this->verifyIfUserSessionExist());
         echo $this->getTwig()->render("homepage.html.twig", [
             "firstCandidatResult" => $this->firstCandidatResult->getResult(),
             "firstCandidatName" => $this->firstCandidatResult->getFirstCandidatName()
         ]);
+        exit();
     }
 }

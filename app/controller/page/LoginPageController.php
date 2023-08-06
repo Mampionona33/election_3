@@ -2,11 +2,9 @@
 
 namespace ControllerNamespace\page;
 
-use CoffeeCode\Router\Router;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Entity\User;
 use Lib\AppEntityManage;
-use Lib\AppTwigEnvironment;
 
 class LoginPageController extends BasePage
 {
@@ -18,32 +16,6 @@ class LoginPageController extends BasePage
     {
         parent::__construct();
         $this->setAppEntityManage(AppEntityManage::getInstance());
-    }
-
-    private function initializeEmailValue(): void
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_POST["email"])) {
-                $this->setEmail($_POST["email"]);
-            }
-        }
-    }
-
-    private function initializePasswordValue(): void
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_POST["password"])) {
-                $this->setPassword($_POST["password"]);
-            }
-        }
-    }
-
-    private function verifyIfListUserExist(): bool
-    {
-        if ($this->getUserByEmail()) {
-            return true;
-        }
-        return false;
     }
 
     private function verifyIfUserExist(): bool
@@ -63,7 +35,7 @@ class LoginPageController extends BasePage
 
     private function getUserLoggedData()
     {
-        var_dump($this->getUserPasswrod());
+        return $this->appEntityManager->getEntityManager()->getRepository(User::class)->findOneBy(["email" => $_POST["email"]]);
     }
 
     private function verifyPasswordCorrect(): bool
@@ -74,34 +46,19 @@ class LoginPageController extends BasePage
         return false;
     }
 
-    private function getUserByEmail()
-    {
-        return  $this->getAppEntityManage()->getEntityManager()->getRepository(User::class)->findOneBy(["email" => $this->getEmail()]);
-    }
-
     private function assigneUserToSessionUser(): void
     {
-        if (!empty($this->getUserByEmail())) {
+        if ($this->verifyIfUserExist() && $this->verifyPasswordCorrect()) {
             if (session_status() === PHP_SESSION_NONE) {
                 session_start();
             }
-            $_SESSION["user"] = $this->getUserByEmail();
+            $_SESSION["user"] = $this->getUserLoggedData();
         }
     }
 
-
     public function initializeSession(): void
     {
-        // $this->initializeEmailValue();
-        // $this->initializePasswordValue();
-        var_dump($this->verifyPasswordCorrect());
-
-
-        // if ($this->verifyPasswordCorrect()) {
-        //     $this->assigneUserToSessionUser();
-        // } else {
-        //     $this->render();
-        // }
+        $this->assigneUserToSessionUser();
     }
 
     public function render(): void
