@@ -1,9 +1,9 @@
 <?php
 
-namespace ControllerNamespace;
+namespace ControllerNamespace\table;
 
+use ControllerNamespace\table\Table;
 use Doctrine\ORM\Tools\SchemaTool;
-use ControllerNamespace\Table;
 
 class CreateTableIfNotExiste extends Table
 {

@@ -1,9 +1,8 @@
 <?php
 
-namespace ControllerNamespace;
+namespace ControllerNamespace\table;
 
 use App\Bootstrap;
-use ControllerNamespace\AbstractTable;
 use Doctrine\ORM\EntityManager;
 
 class Table extends AbstractTable

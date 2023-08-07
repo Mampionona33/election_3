@@ -2,7 +2,7 @@
 
 namespace ControllerNamespace\candidat;
 
-use ControllerNamespace\CreateTableIfNotExiste;
+use ControllerNamespace\table\CreateTableIfNotExiste;
 
 class CreateTableCandidat extends CreateTableIfNotExiste
 {

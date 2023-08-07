@@ -1,6 +1,6 @@
 <?php
 
-namespace ControllerNamespace;
+namespace ControllerNamespace\table;
 
 use App\Bootstrap;
 use Doctrine\ORM\EntityManager;

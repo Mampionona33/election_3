@@ -2,6 +2,7 @@
 
 namespace ControllerNamespace;
 
+use ControllerNamespace\table\CreateTableIfNotExiste;
 
 class CreateTableUser extends CreateTableIfNotExiste
 {
