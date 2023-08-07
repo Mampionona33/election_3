@@ -1,6 +1,6 @@
 <?php
 
-namespace ControllerNamespace;
+namespace ControllerNamespace\candidat;
 
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Entity\Candidat;

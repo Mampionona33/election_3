@@ -78,7 +78,7 @@ final class App
 
     private function handleError(): void
     {
-        $this->router->group("error")->namespace('ControllerNamespace');
+        $this->router->group("error")->namespace('ControllerNamespace\page');
         $this->router->get("/{errcode}", "NotFoundController:notFound");
     }
 

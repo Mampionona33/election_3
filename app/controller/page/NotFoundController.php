@@ -1,6 +1,6 @@
 <?php
 
-namespace ControllerNamespace;
+namespace ControllerNamespace\page;
 
 class NotFoundController
 {

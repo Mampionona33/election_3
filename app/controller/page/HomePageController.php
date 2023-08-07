@@ -3,7 +3,7 @@
 namespace ControllerNamespace\page;
 
 use ControllerNamespace\candidat\CreateTableCandidat;
-use ControllerNamespace\FirstCandidatResult;
+use ControllerNamespace\candidat\FirstCandidatResult as CandidatFirstCandidatResult;
 use Entity\User;
 use Lib\AppEntityManage;
 
@@ -11,12 +11,12 @@ class HomePageController extends BasePage
 {
     private CreateTableCandidat $createTableCandidat;
     private AppEntityManage $appEntityManage;
-    private FirstCandidatResult $firstCandidatResult;
+    private CandidatFirstCandidatResult $firstCandidatResult;
 
     /**
      * Setter
      */
-    public function setFirstCandidatResult(FirstCandidatResult $firstCandidatResult): void
+    public function setFirstCandidatResult(CandidatFirstCandidatResult $firstCandidatResult): void
     {
         $this->firstCandidatResult = $firstCandidatResult;
     }
@@ -82,7 +82,7 @@ class HomePageController extends BasePage
         $this->setAppEntityManage(AppEntityManage::getInstance());
         $this->setCreateTableCandidat(new CreateTableCandidat());
         $this->createTableCandidat->execute();
-        $this->setFirstCandidatResult(new FirstCandidatResult());
+        $this->setFirstCandidatResult(new CandidatFirstCandidatResult());
     }
 
     public function render(): void
