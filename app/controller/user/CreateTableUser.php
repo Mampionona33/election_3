@@ -1,6 +1,6 @@
 <?php
 
-namespace ControllerNamespace;
+namespace ControllerNamespace\user;
 
 use ControllerNamespace\table\CreateTableIfNotExiste;
 

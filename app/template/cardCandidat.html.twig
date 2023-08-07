@@ -14,5 +14,7 @@
 {% endblock %}
 
 {% block message %}
-	{{firstCandidatResult}}
+	{% if firstCandidatName %}
+		{{firstCandidatResult}}
+	{% endif %}
 {% endblock %}
