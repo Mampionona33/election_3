@@ -68,7 +68,7 @@ class LoginPageController extends BasePage
             session_unset();
             session_destroy();
             // Rediriger vers la page d'accueil
-            header("Location: /");
+            // header("Location: /");
             exit();
         }
     }

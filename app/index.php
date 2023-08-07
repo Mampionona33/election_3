@@ -14,11 +14,20 @@ final class App
     private Router $router;
     private string $response;
     private string $baseUrl;
+    private string $requestPath;
+    private string $requestMethod;
 
     /**
      * getter
      */
-
+    public function getRequestMethod(): string
+    {
+        return $this->requestMethod;
+    }
+    public function getRequestPath(): string
+    {
+        return $this->requestPath;
+    }
     public function getBasUrl(): string
     {
         return $this->baseUrl;
@@ -35,6 +44,14 @@ final class App
     /**
      * Setter
      */
+    public function setRequestMethod(string $requestMethod): void
+    {
+        $this->requestMethod = $requestMethod;
+    }
+    public function setRequestPath(string $requestPath): void
+    {
+        $this->requestPath = $requestPath;
+    }
     public function setRouter(Router $router): void
     {
         $this->router = $router;
@@ -49,10 +66,28 @@ final class App
     }
     // --------------------------------------
 
+    private function initialiseRequestPath(): void
+    {
+        $this->setRequestPath(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+    }
+
+    private function initializeRequestMethod(): void
+    {
+        $this->setRequestMethod(parse_url($_SERVER['REQUEST_METHOD'], PHP_URL_PATH));
+    }
+
     private function handleError(): void
     {
         $this->router->group("error")->namespace('ControllerNamespace');
         $this->router->get("/{errcode}", "NotFoundController:notFound");
+    }
+
+    public function __construct(string $baseUrl)
+    {
+        $this->setBaseUrl($baseUrl);
+        $this->setRouter(new Router($this->baseUrl));
+        $this->initialiseRequestPath();
+        $this->initializeRequestMethod();
     }
 
     private function redirectOnError(): void
@@ -62,20 +97,20 @@ final class App
         }
     }
 
-    public function __construct(string $baseUrl)
+    private function handleHomePage(): void
     {
-        $this->setBaseUrl($baseUrl);
-        $this->setRouter(new Router($this->baseUrl));
+        $this->router->namespace("ControllerNamespace\page");
+        $this->router->get("/", "HomePageController:render");
     }
 
-    private function homePageRedirection(): void
-    {
-        if ($this->verifySessionExist()) {
-            $this->router->redirect("/dashboard");
-        } else {
-            $this->router->redirect("/");
-        }
-    }
+    // private function homePageRedirection(): void
+    // {
+    //     if ($this->verifySessionExist()) {
+    //         $this->router->redirect("/dashboard");
+    //     } else {
+    //         $this->router->redirect("/");
+    //     }
+    // }
 
 
     private function  verifySessionExist(): bool
@@ -84,16 +119,16 @@ final class App
         return !empty($_SESSION["user"]);
     }
 
-    private function handleHomePage(): void
-    {
-        $requestedRoute = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-    }
+    // private function handleHomePage(): void
+    // {
+    //     $requestedRoute = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    // }
 
-    private function handeHome(): void
-    {
-        $this->router->namespace("ControllerNamespace\page");
-        $this->router->get("/", "HomePageController:render");
-    }
+    // private function handeHome(): void
+    // {
+    //     $this->router->namespace("ControllerNamespace\page");
+    //     $this->router->get("/", "HomePageController:render");
+    // }
 
     private function handleDashboard(): void
     {
@@ -116,24 +151,39 @@ final class App
         $this->router->post("/login", "LoginPageController:initializeSession");
     }
 
+    private function redirectToDashboardOnLogginSuccessfull(): void
+    {
+        if ($this->requestPath === '/login' && $this->requestMethod === "POST") {
+            if ($this->verifySessionExist()) {
+                $this->router->redirect("/dashboard");
+            }
+        }
+    }
+
+    private function redirectOnLoggout(): void
+    {
+    }
+
     public function __invoke()
     {
 
-        $this->handeHome();
+        // $this->handeHome();
+        // $this->verifySessionExist();
+
+        $this->handleHomePage();
         $this->handleLogin();
         $this->handleDashboard();
         $this->routLogout();
+
         $this->handleError();
-        $this->verifySessionExist();
-
-        $this->handleHomePage();
-
         $this->setResponse($this->router->dispatch());
-        $this->homePageRedirection();
+        // $this->homePageRedirection();
+        $this->redirectToDashboardOnLogginSuccessfull();
         $this->redirectOnError();
     }
 }
 
 // $app = new App("https://mampionona33-organic-couscous-64q9q79vpq7h49gw-8081.preview.app.github.dev");
-$app = new App("http://localhost:8081");
+$app = new App("https://mampionona33-organic-couscous-64q9q79vpq7h49gw-8081.app.github.dev");
+// $app = new App("http://localhost:8081");
 $app();

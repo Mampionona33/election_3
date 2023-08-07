@@ -62,9 +62,15 @@ class HomePageController extends BasePage
     // {
     //     return $this->appEntityManage->getEntityManager()->getRepository(Candidat::class)->findAll();
     // }
+    private function  verifySessionExist(): bool
+    {
+        if (session_status() === PHP_SESSION_NONE) session_start();
+        return !empty($_SESSION["user"]);
+    }
+
     private function getUserSession(): ?User
     {
-        if (isset($_SESSION["user"])) {
+        if ($this->verifySessionExist()) {
             return   $_SESSION["user"];
         }
         return null;
