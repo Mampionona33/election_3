@@ -97,21 +97,21 @@ final class App
         }
     }
 
+    private function redirectToDashboardIfSessionExistOnHomePageRequest(): void
+    {
+        if ($this->requestPath === "/" && $this->requestMethod === "GET") {
+            if ($this->verifySessionExist()) {
+                $this->router->namespace("ControllerNamespace\page");
+                $this->router->redirect("/dashboard");
+            }
+        }
+    }
+
     private function handleHomePage(): void
     {
         $this->router->namespace("ControllerNamespace\page");
         $this->router->get("/", "HomePageController:render");
     }
-
-    // private function homePageRedirection(): void
-    // {
-    //     if ($this->verifySessionExist()) {
-    //         $this->router->redirect("/dashboard");
-    //     } else {
-    //         $this->router->redirect("/");
-    //     }
-    // }
-
 
     private function  verifySessionExist(): bool
     {
@@ -119,30 +119,28 @@ final class App
         return !empty($_SESSION["user"]);
     }
 
-    // private function handleHomePage(): void
-    // {
-    //     $requestedRoute = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-    // }
-
-    // private function handeHome(): void
-    // {
-    //     $this->router->namespace("ControllerNamespace\page");
-    //     $this->router->get("/", "HomePageController:render");
-    // }
+    private function redirectToHomePageIfNotSessionExistOnDashboardRequest(): void
+    {
+        if ($this->requestPath === "/dashboard" && $this->requestMethod === "GET") {
+            if (!$this->verifySessionExist()) {
+                $this->router->redirect("/");
+            }
+        }
+    }
 
     private function handleDashboard(): void
     {
+        $this->redirectToHomePageIfNotSessionExistOnDashboardRequest();
+
         $this->router->namespace("ControllerNamespace\page");
         $this->router->get("/dashboard", "HomePageController:render");
     }
-
 
     private function routLogout(): void
     {
         $this->router->namespace("ControllerNamespace\page");
         $this->router->get("/logout", "LoginPageController:destroySession");
     }
-
 
     private function handleLogin(): void
     {
@@ -160,30 +158,22 @@ final class App
         }
     }
 
-    private function redirectOnLoggout(): void
-    {
-    }
-
     public function __invoke()
     {
-
-        // $this->handeHome();
-        // $this->verifySessionExist();
-
         $this->handleHomePage();
         $this->handleLogin();
         $this->handleDashboard();
         $this->routLogout();
 
         $this->handleError();
+        $this->redirectToDashboardIfSessionExistOnHomePageRequest();
         $this->setResponse($this->router->dispatch());
-        // $this->homePageRedirection();
         $this->redirectToDashboardOnLogginSuccessfull();
         $this->redirectOnError();
     }
 }
 
 // $app = new App("https://mampionona33-organic-couscous-64q9q79vpq7h49gw-8081.preview.app.github.dev");
-$app = new App("https://mampionona33-organic-couscous-64q9q79vpq7h49gw-8081.app.github.dev");
-// $app = new App("http://localhost:8081");
+// $app = new App("https://mampionona33-organic-couscous-64q9q79vpq7h49gw-8081.app.github.dev");
+$app = new App("http://localhost:8081");
 $app();
