@@ -107,6 +107,15 @@ final class App
         }
     }
 
+    private function redirectLoginPageToDashboardIfSessionExist(): void
+    {
+        if ($this->requestPath === "/login" && $this->requestMethod === "GET") {
+            if ($this->verifySessionExist()) {
+                $this->router->redirect("/dashboard");
+            }
+        }
+    }
+
     private function handleHomePage(): void
     {
         $this->router->namespace("ControllerNamespace\page");
@@ -167,6 +176,7 @@ final class App
 
         $this->handleError();
         $this->redirectToDashboardIfSessionExistOnHomePageRequest();
+        $this->redirectLoginPageToDashboardIfSessionExist();
         $this->setResponse($this->router->dispatch());
         $this->redirectToDashboardOnLogginSuccessfull();
         $this->redirectOnError();
