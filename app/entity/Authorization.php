@@ -9,11 +9,13 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
 
 #[Entity]
-#[Table(name:'Authorization')]
+#[Table(name: 'Authorization')]
 class Authorization
 {
     #[Id]
     #[Column(name: "id_authorization", type: 'integer')]
     #[GeneratedValue(strategy: 'AUTO')]
-     private int $id;
+    private int $id;
+    #[Column(name: 'name', length: 100, unique: true)]
+    private $name;
 }

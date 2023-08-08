@@ -2,26 +2,24 @@
 
 namespace ControllerNamespace\page;
 
-use ControllerNamespace\candidat\CreateTableCandidat;
 use ControllerNamespace\candidat\FirstCandidatResult as CandidatFirstCandidatResult;
-use ControllerNamespace\user\CreateTableUser;
+use Entity\tool\CreateOrUpdateTables;
 use Entity\User;
 use Lib\AppEntityManage;
 
 class HomePageController extends BasePage
 {
-    private CreateTableUser $createTableUser;
-    private CreateTableCandidat $createTableCandidat;
     private AppEntityManage $appEntityManage;
     private CandidatFirstCandidatResult $firstCandidatResult;
-
+    private CreateOrUpdateTables $createTables;
     /**
      * Setter
      */
-    public function setCreateTableUser(CreateTableUser $createTableUser): void
+    public function setCreateTable(CreateOrUpdateTables $createTables): void
     {
-        $this->createTableUser = $createTableUser;
+        $this->createTables = $createTables;
     }
+
     public function setFirstCandidatResult(CandidatFirstCandidatResult $firstCandidatResult): void
     {
         $this->firstCandidatResult = $firstCandidatResult;
@@ -31,47 +29,19 @@ class HomePageController extends BasePage
         $this->appEntityManage = $appEntityManage;
     }
 
-    public function setCreateTableCandidat(CreateTableCandidat $createTableCandidat): void
-    {
-        $this->createTableCandidat = $createTableCandidat;
-    }
-
-
     /**
      * Getter
      */
-    public function getCreateTableUser(): CreateTableUser
+    public function getCreateTables(): CreateOrUpdateTables
     {
-        return $this->createTableUser;
+        return $this->createTables;
     }
+
     public function getAppEntityManage(): AppEntityManage
     {
         return $this->appEntityManage;
     }
-    public function getCreateTableCandidat(): CreateTableCandidat
-    {
-        return $this->createTableCandidat;
-    }
 
-
-    // private function  getFirstCandidatFromDB(): array
-    // {
-    //     $dql = 'SELECT c FROM Entity\Candidat c WHERE c.id = (SELECT MIN(c2.id) FROM Entity\Candidat c2)';
-    //     $query = $this->appEntityManage->getEntityManager()->createQuery($dql);
-    //     return $query->getResult();
-    // }
-
-    // private function getCandidatWhichHasMaxPointFromDb(): array
-    // {
-    //     $dql = 'SELECT c FROM Entity\Candidat c WHERE c.nb_voix = (SELECT MAX(c2.nb_voix) FROM Entity\Candidat c2)';
-    //     $query = $this->appEntityManage->getEntityManager()->createQuery($dql);
-    //     return $query->getResult();
-    // }
-
-    // private function getAllCandidatDataFromDB(): array
-    // {
-    //     return $this->appEntityManage->getEntityManager()->getRepository(Candidat::class)->findAll();
-    // }
     private function  verifySessionExist(): bool
     {
         if (session_status() === PHP_SESSION_NONE) session_start();
@@ -90,10 +60,9 @@ class HomePageController extends BasePage
     {
         parent::__construct();
         $this->setAppEntityManage(AppEntityManage::getInstance());
-        $this->setCreateTableCandidat(new CreateTableCandidat());
-        $this->createTableCandidat->execute();
-        $this->setCreateTableUser(new CreateTableUser());
-        $this->createTableUser->execute();
+        $listTableName = ["Candidat", "Authorization", "User", "Role", "Groupe"];
+        $this->setCreateTable(new CreateOrUpdateTables($listTableName));
+        $this->createTables->execute();
         $this->setFirstCandidatResult(new CandidatFirstCandidatResult());
     }
 

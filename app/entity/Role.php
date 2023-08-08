@@ -16,4 +16,6 @@ class Role
     #[Column(name: "id_role", type: 'integer')]
     #[GeneratedValue(strategy: 'AUTO')]
     private int $id;
+    #[Column(name: 'name', length: 100, unique: true)]
+    private $name;
 }

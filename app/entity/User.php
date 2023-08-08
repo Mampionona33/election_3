@@ -2,12 +2,15 @@
 
 namespace Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\JoinTable;
 
 #[Entity]
 #[Table(name: "User")]
@@ -21,8 +24,14 @@ class User
     private $email;
     #[Column(name: 'password', length: 250)]
     private $password;
+    #[ManyToMany(targetEntity: Groupe::class, mappedBy: 'users')]
+    #[JoinTable(name: 'users_groups')]
+    private Collection $groups;
 
-    #[ManyToMany(targetEntity: User::class, mappedBy: 'groups')]
+    public function __construct()
+    {
+        $this->groups = new ArrayCollection();
+    }
 
     /**
      * Getter
@@ -49,9 +58,5 @@ class User
     public function setPassword(string $password): void
     {
         $this->password = $password;
-    }
-
-    public function __construct()
-    {
     }
 }
