@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\ManyToMany;
 
 #[Entity]
 #[Table(name: "User")]
@@ -20,8 +21,8 @@ class User
     private $email;
     #[Column(name: 'password', length: 250)]
     private $password;
-    #[Column(name: 'id_groupe', type: 'integer')]
-    private $id_groupe;
+
+    #[ManyToMany(targetEntity: User::class, mappedBy: 'groups')]
 
     /**
      * Getter
@@ -36,11 +37,6 @@ class User
         return $this->password;
     }
 
-    public function getGroupeId(): int
-    {
-        return $this->id_groupe;
-    }
-
     /**
      * setter
      */
@@ -50,17 +46,10 @@ class User
         $this->email = $email;
     }
 
-
     public function setPassword(string $password): void
     {
         $this->password = $password;
     }
-
-    public function setGroupeId(int $id_groupe): void
-    {
-        $this->id_groupe = $id_groupe;
-    }
-
 
     public function __construct()
     {
