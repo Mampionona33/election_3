@@ -8,9 +8,12 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\InverseJoinColumn;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 #[Entity]
 #[Table(name: "User")]
@@ -24,13 +27,13 @@ class User
     private $email;
     #[Column(name: 'password', length: 250)]
     private $password;
-    #[ManyToMany(targetEntity: Groupe::class, mappedBy: 'users')]
-    #[JoinTable(name: 'users_groups')]
-    private Collection $groups;
+    #[ManyToOne(targetEntity: Groupe::class, inversedBy: 'users')]
+    #[JoinColumn(name: 'id_groupe', referencedColumnName: 'id_groupe')]
+    private Groupe $groupe;
 
     public function __construct()
     {
-        $this->groups = new ArrayCollection();
+        $this->groupe = new ArrayCollection();
     }
 
     /**

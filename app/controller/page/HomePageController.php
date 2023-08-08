@@ -60,7 +60,7 @@ class HomePageController extends BasePage
     {
         parent::__construct();
         $this->setAppEntityManage(AppEntityManage::getInstance());
-        $listTableName = ["Candidat", "Authorization", "User", "Role", "Groupe"];
+        $listTableName = ["Candidat", "Authorization", "User", "Role"];
         $this->setCreateTable(new CreateOrUpdateTables($listTableName));
         $this->createTables->execute();
         $this->setFirstCandidatResult(new CandidatFirstCandidatResult());
