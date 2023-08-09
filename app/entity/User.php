@@ -23,10 +23,13 @@ class User
     #[Column(name: 'id_user', type: 'integer')]
     #[GeneratedValue(strategy: 'AUTO')]
     private int $id;
+
     #[Column(name: 'email', length: 100, unique: true)]
     private $email;
+
     #[Column(name: 'password', length: 250)]
     private $password;
+
     #[ManyToOne(targetEntity: Groupe::class, inversedBy: 'users')]
     #[JoinColumn(name: 'id_groupe', referencedColumnName: 'id_groupe')]
     private Groupe $groupe;
@@ -49,6 +52,11 @@ class User
         return $this->password;
     }
 
+    public function getGroupe(): Groupe
+    {
+        return $this->groupe;
+    }
+
     /**
      * setter
      */
@@ -61,5 +69,9 @@ class User
     public function setPassword(string $password): void
     {
         $this->password = $password;
+    }
+
+    public function setGroupe(): void
+    {
     }
 }

@@ -8,6 +8,31 @@ use Lib\AppEntityManage;
 
 class LoginPageController extends BasePage
 {
+    private User $userLogged;
+
+    /**
+     * Getter
+     */
+
+    public function getUserLogged(): User
+    {
+        return $this->userLogged;
+    }
+
+    /**
+     * Setter
+     */
+
+    public function setUserLogged(User $userLogged): void
+    {
+        $this->userLogged = $userLogged;
+    }
+
+    private function  initializeUser(): void
+    {
+        $userRepository = $this->appEntityManager->getEntityManager()->getRepository(User::class);
+        $this->setUserLogged($userRepository->findOneBy(["email" => $_POST["email"]]));
+    }
 
     /**
      * construct
@@ -22,8 +47,20 @@ class LoginPageController extends BasePage
     {
         $userRepository = $this->appEntityManager->getEntityManager()->getRepository(User::class);
         $user = $userRepository->findOneBy(["email" => $_POST["email"]]);
+        $groupe = $user->getGroupe();
+        if ($groupe) {
+            $roles = $groupe->getRoles();
+            $roleNames = [];
+            foreach ($roles as $role) {
+                $roleNames[] = $role->getSlug();
+            }
+            var_dump($roleNames);
+        }
+        die();
         return $user !== null;
     }
+
+
 
     private function getUserPasswrod(): string
     {

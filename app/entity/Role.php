@@ -20,4 +20,20 @@ class Role
     private $slug;
     #[Column(name: 'label', length: 100, unique: true)]
     private $label;
+
+    /**
+     * Getter
+     */
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+    public function getLabel(): string
+    {
+        return $this->label;
+    }
+    public function getId(): int
+    {
+        return $this->id;
+    }
 }
