@@ -15,7 +15,6 @@ use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\JoinColumns;
 use Doctrine\ORM\PersistentCollection as ORMPersistentCollection;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\InverseJoinColumn;
 
 #[Entity]
@@ -37,11 +36,12 @@ class Groupe
     #[JoinTable(name: 'Groupe_Role')]
     #[JoinColumn(name: 'id_groupe', referencedColumnName: 'id_groupe')]
     #[InverseJoinColumn(name: 'id_role', referencedColumnName: 'id_role')]
-    private Collection $roles;
+    private ORMPersistentCollection $roles;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->roles = new ArrayCollection();
     }
 
     /**
