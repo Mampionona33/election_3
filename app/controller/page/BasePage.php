@@ -75,10 +75,17 @@ class BasePage
     // ------------------------------------
     private function verifyUserLogged(): bool
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         if (isset($_SESSION["user_id"])) {
             return true;
         }
         return false;
+    }
+
+    private function initializeUserRole(): void
+    {
     }
 
     public function __construct()
