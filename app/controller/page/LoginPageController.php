@@ -28,12 +28,6 @@ class LoginPageController extends BasePage
         $this->userLogged = $userLogged;
     }
 
-    private function  initializeUser(): void
-    {
-        $userRepository = $this->appEntityManager->getEntityManager()->getRepository(User::class);
-        $this->setUserLogged($userRepository->findOneBy(["email" => $_POST["email"]]));
-    }
-
     /**
      * construct
      */
@@ -47,20 +41,18 @@ class LoginPageController extends BasePage
     {
         $userRepository = $this->appEntityManager->getEntityManager()->getRepository(User::class);
         $user = $userRepository->findOneBy(["email" => $_POST["email"]]);
-        $groupe = $user->getGroupe();
-        if ($groupe) {
-            $roles = $groupe->getRoles();
-            $roleNames = [];
-            foreach ($roles as $role) {
-                $roleNames[] = $role->getSlug();
-            }
-            var_dump($roleNames);
-        }
-        die();
+        // $groupe = $user->getGroupe();
+        // if ($groupe) {
+        //     $roles = $groupe->getRoles();
+        //     $roleNames = [];
+        //     foreach ($roles as $role) {
+        //         $roleNames[] = $role->getSlug();
+        //     }
+        //     var_dump($roleNames);
+        // }
+        // die();
         return $user !== null;
     }
-
-
 
     private function getUserPasswrod(): string
     {
@@ -76,7 +68,6 @@ class LoginPageController extends BasePage
         return $userRepository->findOneBy(["email" => $_POST["email"]]);
     }
 
-
     private function verifyPasswordCorrect(): bool
     {
         if ($this->getUserPasswrod() === $_POST['password']) {
@@ -91,7 +82,10 @@ class LoginPageController extends BasePage
             if (session_status() === PHP_SESSION_NONE) {
                 session_start();
             }
-            $_SESSION["user"] = $this->getUserLoggedData();
+            $user = $this->getUserLoggedData();
+            if ($user !== null) {
+                $_SESSION["user_id"] = $user->getId();
+            }
         }
     }
 

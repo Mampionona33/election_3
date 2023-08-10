@@ -42,6 +42,10 @@ class User
     /**
      * Getter
      */
+    public function getId(): int
+    {
+        return $this->id;
+    }
     public function getEmail(): string
     {
         return $this->email;
@@ -60,6 +64,10 @@ class User
     /**
      * setter
      */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
 
     public function setEmail(string $email): void
     {

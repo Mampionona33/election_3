@@ -5,11 +5,9 @@ namespace ControllerNamespace\page;
 use ControllerNamespace\candidat\FirstCandidatResult as CandidatFirstCandidatResult;
 use Entity\tool\CreateOrUpdateTables;
 use Entity\User;
-use Lib\AppEntityManage;
 
 class HomePageController extends BasePage
 {
-    private AppEntityManage $appEntityManage;
     private CandidatFirstCandidatResult $firstCandidatResult;
     private CreateOrUpdateTables $createTables;
     /**
@@ -24,10 +22,6 @@ class HomePageController extends BasePage
     {
         $this->firstCandidatResult = $firstCandidatResult;
     }
-    public function setAppEntityManage(AppEntityManage $appEntityManage): void
-    {
-        $this->appEntityManage = $appEntityManage;
-    }
 
     /**
      * Getter
@@ -37,21 +31,18 @@ class HomePageController extends BasePage
         return $this->createTables;
     }
 
-    public function getAppEntityManage(): AppEntityManage
-    {
-        return $this->appEntityManage;
-    }
-
     private function  verifySessionExist(): bool
     {
         if (session_status() === PHP_SESSION_NONE) session_start();
-        return !empty($_SESSION["user"]);
+        return !empty($_SESSION["user_id"]);
     }
 
     private function getUserSession(): ?User
     {
         if ($this->verifySessionExist()) {
-            return   $_SESSION["user"];
+            $userId = $_SESSION["user_id"];
+            $userRepository = $this->appEntityManager->getEntityManager()->getRepository(User::class);
+            return $userRepository->find($userId);
         }
         return null;
     }
@@ -59,7 +50,6 @@ class HomePageController extends BasePage
     public function __construct()
     {
         parent::__construct();
-        $this->setAppEntityManage(AppEntityManage::getInstance());
         $listTableName = ["Candidat", "User", "Role"];
         $this->setCreateTable(new CreateOrUpdateTables($listTableName));
         $this->createTables->execute();
