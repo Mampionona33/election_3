@@ -15,9 +15,14 @@ class BasePage
     protected AppEntityManage $appEntityManager;
     protected string $query;
     protected ResultSetMappingBuilder $resultSetMappingBuilder;
+    protected array $userRoles;
     /**
      * setter
      */
+    public function setUserRoles(array $userRoles): void
+    {
+        $this->userRoles = $userRoles;
+    }
     public function setResultSetMappingBuilder(ResultSetMappingBuilder $resultSetMappingBuilder): void
     {
         $this->resultSetMappingBuilder = $resultSetMappingBuilder;
@@ -42,6 +47,10 @@ class BasePage
     /**
      * getter
      */
+    public function getUserRoles(): array
+    {
+        return $this->userRoles;
+    }
     public function getResultSetMappingBuilder(): ResultSetMappingBuilder
     {
         return $this->resultSetMappingBuilder;
@@ -61,6 +70,15 @@ class BasePage
     public function getService(): Service
     {
         return $this->service;
+    }
+
+    // ------------------------------------
+    private function verifyUserLogged(): bool
+    {
+        if (isset($_SESSION["user_id"])) {
+            return true;
+        }
+        return false;
     }
 
     public function __construct()
