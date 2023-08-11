@@ -4,7 +4,5 @@
 {% endblock %}
 
 {% block content %}
-	{% if candidats %}
-		{% include 'components/table.html.twig' with {headers: ["Id", "Nom", "Nombres de voix","Pourcentages"], tableContent: candidats} %}
-	{% endif %}
+	{% include 'components/table.html.twig' with {headers: ["Id", "Nom", "Nombres de voix","Pourcentages"], tableContent: candidats} %}
 {% endblock %}
