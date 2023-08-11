@@ -58,11 +58,12 @@ class HomePageController extends BasePage
 
     public function render(): void
     {
-        var_dump($this->userRoles);
+        // var_dump($this->userRoles);
         echo $this->getTwig()->render("homepage.html.twig", [
             "firstCandidatResult" => $this->firstCandidatResult->getResult(),
             "firstCandidatName" => $this->firstCandidatResult->getFirstCandidatName(),
-            "user" => $this->getUserSession()
+            "user" => $this->getUserSession(),
+            "user_roles" => $this->userRoles
         ]);
         exit();
     }

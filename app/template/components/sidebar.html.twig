@@ -10,8 +10,12 @@
 		<div class="offcanvas-body p-0">
 			<div class="d-flex flex-column">
 				<a href="/dashboard" class="text-decoration-none text-dark p-2 " style="background-color: #f0f0f0; overflow: hidden;">Résultat</a>
-				{% if services.canManageCandidats %}
-					<a href="/candidat" class="text-decoration-none text-dark p-2 " style="background-color: #f0f0f0; overflow: hidden;">Gérer candidats</a>
+				{% if user_roles %}
+					{% for item in user_roles %}
+						{% if "create_candidat" in item %}
+							<a href="/candidat" class="text-decoration-none text-dark p-2 " style="background-color: #f0f0f0; overflow: hidden;">Gérer candidats</a>
+						{% endif %}
+					{% endfor %}
 				{% endif %}
 			</div>
 		</div>
