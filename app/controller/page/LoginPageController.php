@@ -4,29 +4,16 @@ namespace ControllerNamespace\page;
 
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Entity\User;
-use Lib\AppEntityManage;
 
 class LoginPageController extends BasePage
 {
-    private User $userLogged;
-
     /**
      * Getter
      */
 
-    public function getUserLogged(): User
-    {
-        return $this->userLogged;
-    }
-
     /**
      * Setter
      */
-
-    public function setUserLogged(User $userLogged): void
-    {
-        $this->userLogged = $userLogged;
-    }
 
     /**
      * construct
@@ -34,23 +21,12 @@ class LoginPageController extends BasePage
     public function __construct()
     {
         parent::__construct();
-        $this->setAppEntityManage(AppEntityManage::getInstance());
     }
 
     private function verifyIfUserExist(): bool
     {
         $userRepository = $this->appEntityManager->getEntityManager()->getRepository(User::class);
         $user = $userRepository->findOneBy(["email" => $_POST["email"]]);
-        // $groupe = $user->getGroupe();
-        // if ($groupe) {
-        //     $roles = $groupe->getRoles();
-        //     $roleNames = [];
-        //     foreach ($roles as $role) {
-        //         $roleNames[] = $role->getSlug();
-        //     }
-        //     var_dump($roleNames);
-        // }
-        // die();
         return $user !== null;
     }
 
@@ -89,6 +65,22 @@ class LoginPageController extends BasePage
         }
     }
 
+    public function initializeUserRole(): void
+    {
+        if ($this->verifyIfUserExist() && isset($_SESSION["user_id"])) {
+            $this->initializeUser();
+            $groupe = $this->userLogged->getGroupe();
+            if ($groupe) {
+                $roles = $groupe->getRoles();
+                $roleNames = [];
+                foreach ($roles as $role) {
+                    $roleNames[] = $role->getSlug();
+                }
+                $_SESSION["user_roles"] = $roleNames;
+            }
+        }
+    }
+
     public function destroySession(): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -107,6 +99,7 @@ class LoginPageController extends BasePage
     public function initializeSession(): void
     {
         $this->assigneUserToSessionUser();
+        $this->initializeUserRole();
     }
 
     public function render(): void

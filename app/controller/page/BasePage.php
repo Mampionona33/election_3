@@ -3,6 +3,7 @@
 namespace ControllerNamespace\page;
 
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
+use Entity\User;
 use Lib\AppEntityManage;
 use Lib\TwigEnvironment;
 use ServiceNamespace\Service;
@@ -15,10 +16,15 @@ class BasePage
     protected AppEntityManage $appEntityManager;
     protected string $query;
     protected ResultSetMappingBuilder $resultSetMappingBuilder;
-    protected array $userRoles;
+    protected array $userRoles = [];
+    protected $userLogged;
     /**
      * setter
      */
+    public function setUserLogged($userLogged): void
+    {
+        $this->userLogged = $userLogged;
+    }
     public function setUserRoles(array $userRoles): void
     {
         $this->userRoles = $userRoles;
@@ -44,9 +50,15 @@ class BasePage
         $this->service = $service;
     }
 
+
+
     /**
      * getter
      */
+    public function getUserLogged()
+    {
+        return $this->userLogged;
+    }
     public function getUserRoles(): array
     {
         return $this->userRoles;
@@ -84,8 +96,19 @@ class BasePage
         return false;
     }
 
-    private function initializeUserRole(): void
+    protected function initializeUser(): void
     {
+        if ($this->verifyUserLogged()) {
+            $userRepo = $this->appEntityManager->getEntityManager()->getRepository(User::class);
+            $this->setUserLogged($userRepo->find($_SESSION["user_id"]));
+        }
+    }
+
+    private function initilizeUserRoles(): void
+    {
+        if (isset($_SESSION["user_roles"])) {
+            $this->setUserRoles($_SESSION["user_roles"]);
+        }
     }
 
     public function __construct()
@@ -93,5 +116,6 @@ class BasePage
         $this->setAppEntityManage(AppEntityManage::getInstance());
         $this->setTwig(TwigEnvironment::getInstance()->getTwig());
         $this->setService(new Service());
+        $this->initilizeUserRoles();
     }
 }
