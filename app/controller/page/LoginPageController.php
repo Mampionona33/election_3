@@ -65,7 +65,7 @@ class LoginPageController extends BasePage
         }
     }
 
-    public function initializeUserRole(): void
+    public function assigneUserRoleToSession(): void
     {
         if ($this->verifyIfUserExist() && isset($_SESSION["user_id"])) {
             $this->initializeUser();
@@ -99,7 +99,7 @@ class LoginPageController extends BasePage
     public function initializeSession(): void
     {
         $this->assigneUserToSessionUser();
-        $this->initializeUserRole();
+        $this->assigneUserRoleToSession();
     }
 
     public function render(): void

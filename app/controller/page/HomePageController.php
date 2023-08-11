@@ -54,11 +54,11 @@ class HomePageController extends BasePage
         $this->setCreateTable(new CreateOrUpdateTables($listTableName));
         $this->createTables->execute();
         $this->setFirstCandidatResult(new CandidatFirstCandidatResult());
+        $this->initilizeUserRoles();
     }
 
     public function render(): void
     {
-        // var_dump($this->userRoles);
         echo $this->getTwig()->render("homepage.html.twig", [
             "firstCandidatResult" => $this->firstCandidatResult->getResult(),
             "firstCandidatName" => $this->firstCandidatResult->getFirstCandidatName(),

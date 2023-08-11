@@ -104,7 +104,7 @@ class BasePage
         }
     }
 
-    private function initilizeUserRoles(): void
+    public function initilizeUserRoles(): void
     {
         if (isset($_SESSION["user_roles"])) {
             $this->setUserRoles($_SESSION["user_roles"]);
@@ -116,6 +116,5 @@ class BasePage
         $this->setAppEntityManage(AppEntityManage::getInstance());
         $this->setTwig(TwigEnvironment::getInstance()->getTwig());
         $this->setService(new Service());
-        $this->initilizeUserRoles();
     }
 }

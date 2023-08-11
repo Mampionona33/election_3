@@ -158,6 +158,12 @@ final class App
         $this->router->post("/login", "LoginPageController:initializeSession");
     }
 
+    private function handlePageManageCandidat(): void
+    {
+        $this->router->namespace("ControllerNamespace\page");
+        $this->router->get("/candidat", "CandidatPageController:render");
+    }
+
     private function redirectToDashboardOnLogginSuccessfull(): void
     {
         if ($this->requestPath === '/login' && $this->requestMethod === "POST") {
@@ -172,6 +178,7 @@ final class App
         $this->handleHomePage();
         $this->handleLogin();
         $this->handleDashboard();
+        $this->handlePageManageCandidat();
         $this->routLogout();
 
         $this->handleError();
