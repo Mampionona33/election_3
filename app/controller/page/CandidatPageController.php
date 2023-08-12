@@ -23,13 +23,25 @@ class CandidatPageController extends BasePage
         $this->candidat = $candidat;
     }
 
+    // private function generateCandidatList(): array
+    // {
+    //     $candidatRepo = $this->appEntityManager->getEntityManager()->getRepository(Candidat::class);
+    //     $candidats = $candidatRepo->findAll();
+    //     return $candidats ?? [];
+    // }
+
     private function generateCandidatList(): array
     {
         $candidatRepo = $this->appEntityManager->getEntityManager()->getRepository(Candidat::class);
-        $candidats = $candidatRepo->findAll();
-        // var_dump($candidat);
+
+        $candidats = $candidatRepo->createQueryBuilder('candidat')
+            ->select('candidat')
+            ->getQuery()
+            ->getResult();
+
         return $candidats ?? [];
     }
+
 
     public function __construct()
     {

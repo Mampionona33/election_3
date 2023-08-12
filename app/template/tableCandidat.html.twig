@@ -1,1 +1,17 @@
 {% extends 'components/table.html.twig' %}
+
+{% block tableContent %}
+	{% for row in tableContent %}
+		<tr>
+			<td>
+				{{row.id}}
+			</td>
+			<td>
+				{{row.name}}
+			</td>
+			<td>
+				{{row.nb_voix}}
+			</td>
+		</tr>
+	{% endfor %}
+{% endblock %}
