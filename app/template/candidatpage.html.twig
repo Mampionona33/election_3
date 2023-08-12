@@ -4,5 +4,10 @@
 {% endblock %}
 
 {% block content %}
-	{% include 'components/table.html.twig' with {headers: ["Id", "Nom", "Nombres de voix","Pourcentages"], tableContent: candidats} %}
+	{% if candidats is empty %}
+		<p>Aucun candidat n'est disponible pour le moment.</p>
+	{% else %}
+		{{candidats}}
+		{% include 'components/table.html.twig' with {headers: ["Id", "Nom", "Nombres de voix", "Pourcentages"], tableContent: candidats} %}
+	{% endif %}
 {% endblock %}

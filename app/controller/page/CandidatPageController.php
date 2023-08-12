@@ -11,10 +11,25 @@ class CandidatPageController extends BasePage
     /**
      * Getter
      */
-
+    public function getCandidat(): Candidat
+    {
+        return $this->candidat;
+    }
     /**
      * Setter
      */
+    public function setCandidat(Candidat $candidat): void
+    {
+        $this->candidat = $candidat;
+    }
+
+    private function generateCandidatList(): array
+    {
+        $candidatRepo = $this->appEntityManager->getEntityManager()->getRepository(Candidat::class);
+        $candidats = $candidatRepo->findAll();
+        // var_dump($candidat);
+        return $candidats ?? [];
+    }
 
     public function __construct()
     {
@@ -25,10 +40,11 @@ class CandidatPageController extends BasePage
 
     public function render(): void
     {
+        var_dump($this->generateCandidatList());
         echo $this->getTwig()->render("candidatpage.html.twig", [
             "user" => $this->userLogged, "user_roles" => $this->userRoles,
             "user_roles" => $this->userRoles,
-            "candidat" => []
+            "candidats" => $this->generateCandidatList()
         ]);
         exit();
     }
