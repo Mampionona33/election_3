@@ -23,11 +23,43 @@ class CandidatPageController extends BasePage
         $this->candidat = $candidat;
     }
 
-    private function generateCandidatList(): array
+    // ------------------------------
+
+    private function calculatePercentage(Candidat $candidat, array $candidats): float
+    {
+        $totalVoix = $this->getTotalVoix($candidats);
+        if ($totalVoix > 0) {
+            return round(($candidat->getNbVoix() / $totalVoix) * 100, 2);
+        }
+        return 0.0;
+    }
+
+    private function getTotalVoix(array $candidats): int
+    {
+        $total = 0;
+        foreach ($candidats as $candidat) {
+            $total += $candidat->getNbVoix();
+        }
+        return $total;
+    }
+
+    public function generateCandidatList(): array
     {
         $candidatRepo = $this->appEntityManager->getEntityManager()->getRepository(Candidat::class);
         $candidats = $candidatRepo->findAll();
-        return $candidats ?? [];
+
+        $candidatList = [];
+        foreach ($candidats as $candidat) {
+            $percentage = $this->calculatePercentage($candidat, $candidats);
+            $candidatList[] = [
+                'id' => $candidat->getId(),
+                'name' => $candidat->getName(),
+                'nbVoix' => $candidat->getNbVoix(),
+                'percentage' => $percentage,
+            ];
+        }
+
+        return $candidatList;
     }
 
     public function __construct()
