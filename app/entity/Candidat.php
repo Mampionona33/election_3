@@ -18,8 +18,8 @@ class Candidat
     private int $id;
     #[Column(name: 'name', length: 100, unique: true)]
     private $name;
-    #[Column(name: 'nb_voix', type: 'integer')]
-    private $nb_voix;
+    #[Column(name: 'nbVoix', type: 'integer')]
+    private $nbVoix;
 
     /**
      * Getter
@@ -34,7 +34,7 @@ class Candidat
     }
     public function getNbVoix(): int
     {
-        return $this->nb_voix;
+        return $this->nbVoix;
     }
     /**
      * Setter
@@ -48,8 +48,8 @@ class Candidat
         $this->name = $name;
     }
 
-    public function setNombredDeVoix(int $nb_voix): void
+    public function setNbVoix(int $nbVoix): void
     {
-        $this->nb_voix = $nb_voix;
+        $this->nbVoix = $nbVoix;
     }
 }

@@ -55,7 +55,7 @@ class FirstCandidatResult
     // ---------------------------------------
     private function getFirstCandidatPercentage(): ?float
     {
-        $this->setQuery('SELECT ROUND((nb_voix * 100) / (SELECT SUM(nb_voix) FROM Candidat)) AS percentage 
+        $this->setQuery('SELECT ROUND((nbVoix * 100) / (SELECT SUM(nbVoix) FROM Candidat)) AS percentage 
         FROM Candidat
         WHERE id_candidat = (SELECT MIN(id_candidat) FROM Candidat)');
 
@@ -85,7 +85,7 @@ class FirstCandidatResult
     private function getCandidatMaxPointId(): ?int
     {
         $this->setQuery('SELECT id_candidat FROM Candidat 
-        WHERE nb_voix = (SELECT Max(nb_voix) FROM Candidat);');
+        WHERE nbVoix = (SELECT Max(nbVoix) FROM Candidat);');
 
         $this->setResultSetMappingBuilder(new ResultSetMappingBuilder($this->appEntityManage->getEntityManager()));
         $this->resultSetMappingBuilder->addScalarResult('id_candidat', 'id_candidat');
